@@ -1,36 +1,32 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class CardDeck {
+    private static ArrayList<Card> currentDeck = new ArrayList<>();
 
-    public ArrayList<Card> createDeck() {
-        ArrayList<Card> deck = new ArrayList<>();
-
-        String[] colours = {"Red", "Blue", "Green", "Yellow" };
-        String[] values = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-        String[] actions = {"Skip", "Reverse", "Draw Two" };
-
-        for (String colour : colours) {
-            deck.add(new Card(colour, "0")); //add 0 card once for each colour
-
-            for (String value : Arrays.copyOfRange(values, 1, values.length)) {
-                deck.add(new Card(colour, value));
-                deck.add(new Card(colour, value));
-            } //add cards 1-9 for each colour twice
-
-            for (String action : actions) {
-                deck.add(new Card(colour, action));
-                deck.add(new Card(colour, action));
-            } //add action cards for each colour twice
-        }
-        for (int i = 0; i < 4; i++) {
-            deck.add(new Card("Wild", "Wild"));
-            deck.add(new Card("Wild", "Draw Four"));
-        }
-
-        Collections.shuffle(deck);
-        return deck;
+    public static ArrayList<Card> buildFreshDeck() {
+        currentDeck = DeckInitializer.initializeDeck();
+        Collections.shuffle(currentDeck);
+        return currentDeck;
     }
 
+    public static ArrayList<Card> createHand() {
+        ArrayList<Card> hand = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            hand.add(currentDeck.getFirst());
+            currentDeck.removeFirst();
+        }
+        return hand;
+    }
+
+    public static Card drawCard() {
+        Card drawn = currentDeck.getFirst();
+        currentDeck.removeFirst();
+        return drawn;
+    }
+
+    public static void reshuffleDeck(ArrayList<Card> discardPile) {
+        Collections.shuffle(discardPile);
+        currentDeck = discardPile;
+    }
 }
