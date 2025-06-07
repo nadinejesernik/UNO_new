@@ -12,11 +12,11 @@ public class UnoMain {
 
         while (true) {
             for (Player player : players) {
-                System.out.println("\n" + player.getName() + "'s turn:");
+                System.out.println("\n" + player.getPlayerName() + "'s turn:");
                 Card playedCard = player.playCard(topCard);
                 discardPile.add(playedCard);
                 topCard = playedCard;
-                System.out.println(player.getName() + " played: " + playedCard);
+                System.out.println(player.getPlayerName() + " played: " + playedCard);
             }
         }
     }
