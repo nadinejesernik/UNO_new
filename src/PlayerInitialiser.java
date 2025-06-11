@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class PlayerInitialiser {
     public static Player[] initializePlayers() {
         Scanner scanner = new Scanner(System.in);
-        int playerCount; //to get rid of 'Negative Array warning'
+        int playerCount; 
 
         System.out.println("How many players should play in this game? ");
         playerCount = scanner.nextInt();
