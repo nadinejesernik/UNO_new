@@ -4,16 +4,21 @@ import java.util.Scanner;
 public class PlayerInitialiser {
     public static Player[] initializePlayers() {
         Scanner scanner = new Scanner(System.in);
-        int humanCount = 1; //to get rid of 'Negative Array warning'
-        Player[] players = new Player[humanCount];
+        int playerCount; //to get rid of 'Negative Array warning'
 
-        humanCount = -1; //initialise with invalid value to start while-loop
+        System.out.println("How many players should play in this game? ");
+        playerCount = scanner.nextInt();
+        Player[] players = new Player[playerCount];
 
-        System.out.print("How many people are playing? (0-4) ");
-        while (humanCount < 0 || humanCount > 4) {
+        System.out.println("Great! " + playerCount + " players are now playing!");
+
+        int humanCount = -1; //initialise with invalid value to start while-loop
+
+        System.out.print("\nOf these players, how many are human?");
+        while (humanCount < 0 || humanCount > playerCount) {
             if (scanner.hasNextInt()) {
                 humanCount = scanner.nextInt();
-                if (humanCount < 0 || humanCount > 4) {
+                if (humanCount < 0 || humanCount > playerCount) {
                     System.out.print("Invalid. Please enter a number between 0 and 4: ");
                 }
             } else {
@@ -31,7 +36,7 @@ public class PlayerInitialiser {
         }
 
         // fill with comp players
-        for (int i = humanCount; i < 4; i++) {
+        for (int i = humanCount; i < playerCount; i++) {
             players[i] = new CompPlayer("COM" + (i +1));
         }
 
