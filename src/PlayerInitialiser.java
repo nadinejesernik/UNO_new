@@ -4,12 +4,12 @@ import java.util.Scanner;
 public class PlayerInitialiser {
     public static Player[] initializePlayers() {
         Scanner scanner = new Scanner(System.in);
-        Player[] players = new Player[4];
+        int humanCount = 1; //to get rid of 'Negative Array warning'
+        Player[] players = new Player[humanCount];
+
+        humanCount = -1; //initialise with invalid value to start while-loop
 
         System.out.print("How many people are playing? (0-4) ");
-        int humanCount = -1; //initialise with invalid value to start while-loop
-
-        // check if input is valid
         while (humanCount < 0 || humanCount > 4) {
             if (scanner.hasNextInt()) {
                 humanCount = scanner.nextInt();
