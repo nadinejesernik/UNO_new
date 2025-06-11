@@ -50,6 +50,13 @@ public class PlayerInitialiser {
         int firstPlayer = rand.nextInt(players.length);
 
         System.out.println("\nPlayer " + players[firstPlayer].getPlayerName() + " begins");
-        return players;
+
+        //create new Player array with the starting Player in the beginning
+        Player[] rotated = new Player[players.length];
+        for (int i = 0; i < players.length; i++) {
+            rotated[i] = players[(firstPlayer + i) % players.length]; //i.g. Player at index [3] starts in 4 player game: 3+0 % 4 = 3
+        }
+
+        return rotated;
     }
 }
