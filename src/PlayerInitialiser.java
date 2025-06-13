@@ -1,28 +1,40 @@
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class PlayerInitialiser {
     public static Player[] initializePlayers() {
         Scanner scanner = new Scanner(System.in);
-        int playerCount; //to get rid of 'Negative Array warning'
+        int playerCount = -1; //initialise with invalid value to start while loop
 
-        System.out.println("How many players should play in this game? ");
-        playerCount = scanner.nextInt();
+        while (playerCount == -1) {
+            System.out.println("How many players should play in this game?");
+            if (scanner.hasNextInt()) {
+                playerCount = scanner.nextInt();
+                if (playerCount < 0) {
+                    System.out.println("Please enter number bigger than 0");
+                }
+            }
+            else {
+                System.out.println("Invalid input. Please try again.");
+                scanner.next(); //clear buffer
+            }
+        }
         Player[] players = new Player[playerCount];
 
         System.out.println("Great! " + playerCount + " players are now playing!");
 
         int humanCount = -1; //initialise with invalid value to start while-loop
 
-        System.out.print("\nOf these players, how many are human?");
+        System.out.print("\nOf these players, how many are human? ");
         while (humanCount < 0 || humanCount > playerCount) {
             if (scanner.hasNextInt()) {
                 humanCount = scanner.nextInt();
                 if (humanCount < 0 || humanCount > playerCount) {
-                    System.out.print("Invalid. Please enter a number between 0 and 4: ");
+                    System.out.print("Invalid. Please enter a number between 0 and the amount of players: ");
                 }
             } else {
-                System.out.print("Invalid input. Please enter a number between 0 and 4: ");
+                System.out.print("Invalid input. Please enter a number between 0 and the amount of players: ");
                 scanner.next(); // clear buffer
             }
         }
@@ -37,14 +49,14 @@ public class PlayerInitialiser {
 
         // fill with comp players
         for (int i = humanCount; i < playerCount; i++) {
-            players[i] = new CompPlayer("COM" + (i +1));
+            players[i] = new CompPlayer("COM" + (i + 1));
         }
 
         return players;
     }
 
     public static void showPlayers(Player[] players) {
-        System.out.println("Players: ");
+        System.out.println("\nPlayers: ");
         for (Player p : players) {
             System.out.println(p.getClass().getSimpleName() + ": " + p.getPlayerName());
         }
