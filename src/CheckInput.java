@@ -28,10 +28,6 @@ public class CheckInput {
                         //da muss noch überprüft werden, ob man die bedingungen für das UNO erfüllt
                         System.out.println("UNO!");
                         return true;
-                    case "ACCUSE":
-                        //hier kommt die überprüfen ob der vorherige spieler geschummelt hat Funktion
-                        System.out.println("You cheated!");
-                        return true;
                     default:
                         System.out.println("Try again");
                         return false;

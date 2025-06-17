@@ -78,12 +78,19 @@ public class Menu {
         System.out.println("playing a wild card instead may be considered cheating.");
         System.out.println("If you have only one card left, you MUST declare 'UNO'.");
         System.out.println("Failing to declare 'UNO' results in an automatic 2-card penalty.");
-
+        System.out.println("For more specifics visit: https://www.uno-kartenspiel.de/wp-content/uploads/2019/08/UNO-Spielregeln-Anleitung.pdf");
+        System.out.println(" ");
         // Accuse-Regel
-        System.out.println("--- Accusing ---");
-        System.out.println("You can accuse the player before you of cheating if they played a wild card");
-        System.out.println("and you think they could have played a normal card instead.");
-        System.out.println("To accuse, type 'accuse' after your card choice, separated by a space.");
+        System.out.println("--- Wild Draw Four Rule ---");
+        System.out.println("If the player before you plays a +4 Wild card, you normally must draw 4 cards and skip your turn.");
+        System.out.println("However, you can challenge them if you think they could have played a regular card instead.");
+        System.out.println("When this happens, you will be shown a special menu with two options:");
+        System.out.println("1. Draw cards");
+        System.out.println("2. Help");
+        System.out.println("Instead of choosing one of these options, you can also type:");
+        System.out.println("accuse");
+        System.out.println("This will start a challenge. If you're right, they draw 4 cards instead. If you're wrong, you draw 6.");
+        System.out.println(" ");
 
         // Eingabeformat
         System.out.println("--- Input Format ---");
@@ -91,8 +98,8 @@ public class Menu {
         System.out.println("To play a card, enter the index of the card (starting at 1).");
         System.out.println("You can also include special commands in the same input:");
         System.out.println("To declare UNO:       2 UNO");
-        System.out.println("To accuse someone:    3 accuse");
         System.out.println("The system accepts commands separated by spaces.");
+        System.out.println(" ");
 
         System.out.println("Your goal is to be the first to play all your cards, which makes you the winner of the round and awards you points.");
         System.out.println("And whoever reaches 500 points first is the WINNER! Good luck!");
