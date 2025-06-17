@@ -31,4 +31,11 @@ public class HumanPlayer extends Player {
             return cardToPlay;
 
     }
+
+    public void showHand() {
+        for (Card card : super.hand) {
+            System.out.print(card + " ");
+        }
+        System.out.println();
+    }
 }

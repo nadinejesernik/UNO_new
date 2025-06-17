@@ -8,7 +8,7 @@ public class Card {
         this.colour = colour;
         this.value = value;
     }
-//katja was here
+
     public String getColour() {
         return colour;
     }

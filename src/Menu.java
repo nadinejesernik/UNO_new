@@ -2,15 +2,15 @@ import java.util.Scanner;
 
 public class Menu {
 
-    static void mainMenu() {
+    static void mainMenu(Player currentPlayer) { //momentaner Spieler als Parameter hinugefügt
         //GameLoop zum probieren
         boolean playerWin = false;
         int playerCount = 1;//wird durch index vom spieler ersetzt
-        while (!playerWin) {
+       // while (!playerWin) {
             //Probieren ob theoretisch new Player Loop passiert
             boolean nextPlayer = false;
-            while (!nextPlayer && playerCount<4) {
-                System.out.println("it's Player "+playerCount+" turn");
+           // while (!nextPlayer && playerCount<4) {
+                System.out.println("it's " + currentPlayer.playerName + "'s turn");
                 System.out.println("Choose an option:");
                 System.out.println("1.Play");
                 System.out.println("2.Help");
@@ -19,12 +19,14 @@ public class Menu {
                 String menuAuswahl = scanner.next();
                 switch (menuAuswahl) {
                     case "1":
-                        playGame(playerCount);
-                        playerCount++;
-                        if(playerCount==5){
-                            playerCount =1;
-                        }
-                        nextPlayer=true;
+//                        playGame(playerCount);
+//                        playerCount++;
+//                        if(playerCount==5){
+//                            playerCount =1;
+//                        }
+//                        nextPlayer=true;
+                        Card playedCard = currentPlayer.playCard(DiscardPile.showTopCard());
+                        DiscardPile.cardPlayed(playedCard);
                         break;
                     case "2":
                         help();
@@ -34,9 +36,10 @@ public class Menu {
                         break;
                     default:
                         System.out.println("Wrong input, try again");
+                        mainMenu(currentPlayer);
                         break;
-                }
-            }
+               // }
+         //   }
         }
     }
 
