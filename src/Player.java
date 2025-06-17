@@ -3,15 +3,25 @@ import java.util.ArrayList;
 public abstract class Player {
     protected String playerName;
     protected ArrayList<Card> hand;
-    protected int scorePoints; //to keep track of points
+    protected int currentHandValue; //to keep track of point value of cards currently in hand
+    //protected boolean Cheater = false;
 
     public Player(String playerName) {
         this.playerName = playerName;
-        hand = new ArrayList<Card>();
-        scorePoints = 0;
+        hand = CardDeck.createHand();
+        currentHandValue = 0;
     }
 
-    public void drawCard(Card card) {
+    public void PlayerDrawsCard() {
+        hand.add(CardDeck.drawCard()); //communicates with Clarissa's card deck drawCard method
+    }
+
+    public int addHandValue(Card card) {
+        //communicates with Clarissa's Card to calculate value at the end of each player round
+        int addValue = 0;
+            //dummy method to actually implement later
+
+        return currentHandValue;
     }
 
 
@@ -37,11 +47,11 @@ public abstract class Player {
         this.hand = hand;
     }
 
-    public int getScorePoints() {
-        return scorePoints;
+    public int getCurrentHandValue() {
+        return currentHandValue;
     }
 
-    public void setScorePoints(int scorePoints) {
-        this.scorePoints = scorePoints;
+    public void setCurrentHandValue(int currentHandValue) {
+        this.currentHandValue = currentHandValue;
     }
 }
