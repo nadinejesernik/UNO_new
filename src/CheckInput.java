@@ -18,7 +18,7 @@ public class CheckInput {
         if(index >0 && index <= currentPlayer.hand.size()){
             System.out.println("you have put that card down");
             //here is the puttingDownCard function
-            if(inputArray.length >= 2){
+            if(inputArray.length == 2){
                 String command = inputArray[1];
                 switch (command.toUpperCase()){
                     case "UNO":
@@ -29,6 +29,8 @@ public class CheckInput {
                         System.out.println("Try again");
                         return false;
                 }
+            } else {
+                return true;
             }
         }
         return false;

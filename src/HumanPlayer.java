@@ -11,14 +11,10 @@ public class HumanPlayer extends Player {
         String inputSting;
         showHand();
 
-        while(true) {
+        do {
             System.out.println("Which card would you like to play? 1-"+hand.size());//+HandArray.length//
             inputSting = input.nextLine();
-            if(CheckInput.splitCheckInput(inputSting,this)) {
-                break;
-            }
-            input.nextLine();
-        }
+        } while(!CheckInput.splitCheckInput(inputSting,this));
 
         String regex = "\\s+";
         String[] inputArray = inputSting.trim().split(regex);
