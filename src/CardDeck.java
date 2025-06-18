@@ -4,15 +4,15 @@ import java.util.Collections;
 public class CardDeck {
     private static ArrayList<Card> currentDeck = new ArrayList<>();
 
-    public static ArrayList<Card> buildFreshDeck() {
+    public static void buildFreshDeck() {
         currentDeck = DeckInitializer.initializeDeck();
         Collections.shuffle(currentDeck);
-        return currentDeck;
     }
 
     public static ArrayList<Card> createHand() {
+        final int handSize = 7;
         ArrayList<Card> hand = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < handSize; i++) {
             hand.add(currentDeck.getFirst());
             currentDeck.removeFirst();
         }

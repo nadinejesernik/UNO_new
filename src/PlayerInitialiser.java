@@ -41,7 +41,7 @@ public class PlayerInitialiser {
         // Set amount of human players
         scanner.nextLine(); // clear buffer
         for (int i = 0; i < humanCount; i++) {
-            System.out.print("Enter a name for Player" + (i + 1) + ": ");
+            System.out.print("Enter a name for " + (i + 1) +". Player: ");
             String name = scanner.nextLine();
             players[i] = new HumanPlayer(name);
         }

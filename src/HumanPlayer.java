@@ -6,35 +6,43 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public Card playCard(Card topCard) {
+    public void playCard() { //topcard parameter entfernt, übernimmt static DiscardPile. return value auf void gesetzt.
         Scanner input = new Scanner(System.in);
+        String inputSting;
         showHand();
 
-        System.out.println("The card on top of the deck is: " + topCard);
-        System.out.println("Enter the index number of the Card you would like to play: ");
-        int cardIndex = input.nextInt();
+        while(true) {
+            System.out.println("Which card would you like to play? 1-"+hand.size());//+HandArray.length//
+            inputSting = input.nextLine();
+            if(CheckInput.splitCheckInput(inputSting,this)) {
+                break;
+            }
+            input.nextLine();
+        }
 
-        if (cardIndex < 0 || cardIndex > hand.size() - 1) { //if input out of bounds run playCard again
+        String regex = "\\s+";
+        String[] inputArray = inputSting.trim().split(regex);
+
+        int cardIndex = Integer.valueOf(inputArray[0]);
+
+        if (cardIndex < 1 || cardIndex > hand.size()) { //if input out of bounds run playCard again
             System.out.println("Invalid index. Try again.");
-            return playCard(topCard);
+            playCard();
         }
 
-        Card cardToPlay = hand.get(cardIndex);
-
-        if (hand.get(cardIndex).getColour().equals(topCard.getColour()) || hand.get(cardIndex).getValue().equals(topCard.getValue()) || hand.get(cardIndex).getColour().equals("Wild")) {
-            hand.remove(cardIndex);
+        Card cardToPlay = hand.get(cardIndex-1);
+        if(CardValidity.isValidCard(cardToPlay)) {
+            hand.remove(cardIndex-1);
+            DiscardPile.cardPlayed(cardToPlay);
+        } else {
+            System.out.println("This Card is not valid. You draw 1 Card as punishment");
+            //PunishmentManager.InvalidCard();
         }
-        else {
-            System.out.println("Invalid card. Try again.");
-            return playCard(topCard);
-        }
-            return cardToPlay;
-
     }
 
     public void showHand() {
         for (Card card : super.hand) {
-            System.out.print(card + " ");
+            System.out.print(card + " || ");
         }
         System.out.println();
     }

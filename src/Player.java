@@ -8,7 +8,7 @@ public abstract class Player {
 
     public Player(String playerName) {
         this.playerName = playerName;
-        hand = CardDeck.createHand();
+//        hand = CardDeck.createHand();
         currentHandValue = 0;
     }
 
@@ -25,7 +25,7 @@ public abstract class Player {
     }
 
 
-    public abstract Card playCard(Card topCard); //to be implemented by subclasses
+    public abstract void playCard(); //to be implemented by subclasses
 
 
 

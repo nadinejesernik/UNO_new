@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 public class Menu {
-
-    static void mainMenu(Player currentPlayer) { //momentaner Spieler als Parameter hinugefügt
+    static Player currentPlayer;
+    static void mainMenu(Player player) { //momentaner Spieler als Parameter hinugefügt
+        currentPlayer = player;
         //GameLoop zum probieren
         boolean playerWin = false;
         int playerCount = 1;//wird durch index vom spieler ersetzt
@@ -25,8 +26,7 @@ public class Menu {
 //                            playerCount =1;
 //                        }
 //                        nextPlayer=true;
-                        Card playedCard = currentPlayer.playCard(DiscardPile.showTopCard());
-                        DiscardPile.cardPlayed(playedCard);
+                        currentPlayer.playCard();
                         break;
                     case "2":
                         help();
@@ -46,7 +46,7 @@ public class Menu {
     //momentan player Count später Name des Spielers
     static void playGame(int playerCount) {
         //hier sieht man die oberste Karte vom Stapel
-        System.out.println("Player " +playerCount+" these are your cards:");
+        System.out.println("Player " + currentPlayer.playerName + " these are your cards:");
         //hier kommt showHand
         //hier kommt die CardValidity
         //the game checks if you have any card that you can lay;
@@ -54,12 +54,14 @@ public class Menu {
 
 
         // if you can lay something the game asks "which card would you like to lay?"
-        while(true) {
-            System.out.println("Which card would you like to play? 1-");//+HandArray.length//
-            if(CheckInput.splitCheckInput()){
-                break;
-            }
-        }
+
+//        while(true) {
+//            System.out.println("Which card would you like to play? 1-"+currentPlayer.hand.size());//+HandArray.length//
+//            if(CheckInput.splitCheckInput(currentPlayer)){
+//                break;
+//            }
+//        }
+
         // that gets split and checked
         // if everything is good the card gets put on the discard pile
         // and if there is a second command that one also goes

@@ -10,12 +10,12 @@ public class Table {
         for (Player player : players) {
             player.setHand(CardDeck.createHand());
         }
-
     }
 
     public static void GamePlay() {
         while(!winnerCheck()) {
             for (Player player : players) {
+                System.out.println("The card on top of the deck is: " + DiscardPile.showTopCard()); //Karte wird hier angezeigt egal ob Mensch oder Bot
                 if (player instanceof HumanPlayer) {
                     Menu.mainMenu(player);
                 }
