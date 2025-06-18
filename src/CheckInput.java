@@ -13,27 +13,35 @@ public class CheckInput {
         String regex = "\\s+";
         String[] inputArray = input.trim().split(regex);
 
-        int index = Integer.valueOf(inputArray[0]);
+        if (inputArray.length == 0 || inputArray[0].isEmpty()) {
+            System.out.println("Input cannot be empty.");
+            return false;
+        }
 
-        if(index >0 && index <= currentPlayer.hand.size()){
-            System.out.println("you have put that card down");
-            //here is the puttingDownCard function
-            if(inputArray.length == 2){
-                String command = inputArray[1];
-                switch (command.toUpperCase()){
-                    case "UNO":
-                        //da muss noch überprüft werden, ob man die bedingungen für das UNO erfüllt
-                        System.out.println("UNO!");
-                        return true;
-                    default:
-                        System.out.println("Try again");
-                        return false;
-                }
-            } else {
-                return true;
+        int index;
+        try {
+            index = Integer.parseInt(inputArray[0]);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input: please start with a number.");
+            return false;
+        }
+        if (index < 1 || index > currentPlayer.hand.size()) {
+            System.out.println("Invalid card number. Please enter a number between 1 and " + currentPlayer.hand.size());
+            return false;
+        }
+        if (inputArray.length >= 2) {
+            String command = inputArray[1];
+            switch (command.toUpperCase()) {
+                case "UNO":
+                    System.out.println("UNO!");
+                    break;
+                default:
+                    System.out.println("We do not know that command, please try again.");
+                    return false;
             }
         }
-        return false;
+
+        return true;
     }
 }
 

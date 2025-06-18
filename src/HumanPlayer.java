@@ -8,31 +8,30 @@ public class HumanPlayer extends Player {
     @Override
     public void playCard() { //topcard parameter entfernt, übernimmt static DiscardPile. return value auf void gesetzt.
         Scanner input = new Scanner(System.in);
-        String inputSting;
+        String inputString;
         showHand();
 
-        do {
-            System.out.println("Which card would you like to play? 1-"+hand.size());//+HandArray.length//
-            inputSting = input.nextLine();
-        } while(!CheckInput.splitCheckInput(inputSting,this));
+        while (true) {
+            System.out.println("Which card would you like to play? (1-" + hand.size() + ")");
+            inputString = input.nextLine();
 
-        String regex = "\\s+";
-        String[] inputArray = inputSting.trim().split(regex);
-
-        int cardIndex = Integer.valueOf(inputArray[0]);
-
-        if (cardIndex < 1 || cardIndex > hand.size()) { //if input out of bounds run playCard again
-            System.out.println("Invalid index. Try again.");
-            playCard();
+            if (CheckInput.splitCheckInput(inputString, this)) {
+                break; // Valid input
+            }
+            // Invalid input -> re-prompt
         }
 
-        Card cardToPlay = hand.get(cardIndex-1);
-        if(CardValidity.isValidCard(cardToPlay)) {
-            hand.remove(cardIndex-1);
+        String[] inputArray = inputString.trim().split("\\s+");
+        int cardIndex = Integer.parseInt(inputArray[0]);
+
+        Card cardToPlay = hand.get(cardIndex - 1);
+
+        if (CardValidity.isValidCard(cardToPlay)) {
+            hand.remove(cardIndex - 1);
             DiscardPile.cardPlayed(cardToPlay);
         } else {
-            System.out.println("This Card is not valid. You draw 1 Card as punishment");
-            //PunishmentManager.InvalidCard();
+            System.out.println("This card is not valid. You draw 1 card as punishment.");
+            // PunishmentManager.InvalidCard();
         }
     }
 
