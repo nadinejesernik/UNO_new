@@ -6,12 +6,12 @@ public class PlayerInitialiser {
         Scanner scanner = new Scanner(System.in);
         int playerCount = -1; //initialise with invalid value to start while loop
 
-        while (playerCount <= 0 ) {
-            System.out.println("How many players should play in this game? Enter a number higher than 0");
+        while (playerCount <= 1 ) {
+            System.out.println("How many players should play in this game? Enter a number higher than 1");
             if (scanner.hasNextInt()) {
                 playerCount = scanner.nextInt();
-                if (playerCount < 0) {
-                    System.out.println("Please enter a number higher than 0");
+                if (playerCount < 1) {
+                    System.out.println("Please enter a number higher than 1");
                 }
             }
             else {
