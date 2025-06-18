@@ -4,24 +4,26 @@ import java.util.Scanner;
 public class PlayerInitialiser {
     public static Player[] initializePlayers() {
         Scanner scanner = new Scanner(System.in);
-        int playerCount = -1; //initialise with invalid value to start while loop
+        //  int playerCount = -1; //initialise with invalid value to start while loop
 
-        while (playerCount <= 1 ) {
-            System.out.println("How many players should play in this game? Enter a number higher than 1");
-            if (scanner.hasNextInt()) {
-                playerCount = scanner.nextInt();
-                if (playerCount < 1) {
-                    System.out.println("Please enter a number higher than 1");
-                }
-            }
-            else {
-                System.out.println("Invalid input. Please try again.");
-                scanner.next(); //clear buffer
-            }
-        }
+        // while (playerCount <= 1 ) {
+        //   System.out.println("How many players should play in this game? Enter a number higher than 1");
+        //   if (scanner.hasNextInt()) {
+        //      playerCount = scanner.nextInt();
+        //     if (playerCount < 1) {
+       // System.out.println("Please enter a number higher than 1");
+        //     }
+        //    }
+        //   else {
+        //    System.out.println("Invalid input. Please try again.");
+        //    scanner.next(); //clear buffer
+        //  }
+        // }
+
+        int playerCount = 4;
         Player[] players = new Player[playerCount];
 
-        System.out.println("Great! " + playerCount + " players are now playing!");
+        System.out.println("Welcome! " + playerCount + " players are now playing!");
 
         int humanCount = -1; //initialise with invalid value to start while-loop
 
@@ -41,7 +43,7 @@ public class PlayerInitialiser {
         // Set amount of human players
         scanner.nextLine(); // clear buffer
         for (int i = 0; i < humanCount; i++) {
-            System.out.print("Enter a name for " + (i + 1) +". Player: ");
+            System.out.print("Enter a name for Player " + (i + 1) + " ");
             String name = scanner.nextLine();
             players[i] = new HumanPlayer(name);
         }
