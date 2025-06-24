@@ -40,6 +40,7 @@ public class PlayerInitialiser {
             }
         }
 
+        Table.humanCount = humanCount;
         // Set amount of human players
         scanner.nextLine(); // clear buffer
         for (int i = 0; i < humanCount; i++) {

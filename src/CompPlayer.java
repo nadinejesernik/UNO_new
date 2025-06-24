@@ -36,6 +36,9 @@ public class CompPlayer extends Player {
             }
 
             if (CardValidity.isValidCard(chosenCard)) {
+                if (chosenCard instanceof ActionCard) {
+                    ((ActionCard) chosenCard).playAction();
+                }
                 hand.remove(chosenCard);
                 DiscardPile.cardPlayed(chosenCard);
                 System.out.println(getPlayerName() + " played: " + chosenCard + " (Attention: " + attention + ")"); //sout so human Players know what is happening
@@ -56,6 +59,9 @@ public class CompPlayer extends Player {
             System.out.println(getPlayerName() + " drew: " + drawn);
 
             if (CardValidity.isValidCard(drawn)) {
+                if (drawn instanceof ActionCard) {
+                    ((ActionCard) drawn).playAction();
+                }
                 hand.remove(drawn);
                 DiscardPile.cardPlayed(drawn);
                 System.out.println(getPlayerName() + " played the drawn card: " + drawn);

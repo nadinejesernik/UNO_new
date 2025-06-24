@@ -12,6 +12,10 @@ public class DiscardPile {
     }
 
     public static ArrayList<Card> returnDiscardPile() {
-        return discardPile; // --  mit dem CardDeck verbunden
+        ArrayList<Card> emptyList = new ArrayList<>();
+        ArrayList<Card> returnPile = discardPile;
+        discardPile = emptyList;
+        discardPile.add(returnPile.removeLast());
+        return returnPile; // --  mit dem CardDeck verbunden
     }
 }

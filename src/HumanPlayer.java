@@ -27,6 +27,9 @@ public class HumanPlayer extends Player {
         Card cardToPlay = hand.get(cardIndex - 1);
 
         if (CardValidity.isValidCard(cardToPlay)) {
+            if (cardToPlay instanceof ActionCard) {
+                ((ActionCard) cardToPlay).playAction();
+            }
             hand.remove(cardIndex - 1);
             DiscardPile.cardPlayed(cardToPlay);
         } else {
@@ -35,10 +38,4 @@ public class HumanPlayer extends Player {
         }
     }
 
-    public void showHand() {
-        for (Card card : super.hand) {
-            System.out.print(card + " || ");
-        }
-        System.out.println();
-    }
 }

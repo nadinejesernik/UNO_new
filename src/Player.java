@@ -27,7 +27,12 @@ public abstract class Player {
 
     public abstract void playCard(); //to be implemented by subclasses
 
-
+    public void showHand() {
+        for (Card card : this.hand) {
+            System.out.print(card + " || ");
+        }
+        System.out.println();
+    }
 
     //Getter&Setter
 

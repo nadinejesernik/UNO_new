@@ -20,8 +20,16 @@ public class CardDeck {
     }
 
     public static Card drawCard() {
+        if (currentDeck.size() == 0) {
+            reshuffleDeck(DiscardPile.returnDiscardPile());
+        }
+
         Card drawn = currentDeck.getFirst();
         currentDeck.removeFirst();
+
+        if (drawn.getColour() == Card.Colour.WILD) {
+            drawn.wildColor = null;
+        }
         return drawn;
     }
 

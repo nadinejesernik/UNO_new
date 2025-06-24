@@ -1,25 +1,21 @@
 public class Card {
-
-    private final String colour;
-    private final String value;
+    public enum Colour {
+        RED,
+        GREEN,
+        BLUE,
+        YELLOW,
+        WILD
+    }
+    private final Colour colour;
+    protected Colour wildColor;
     private int pointValue;
 
-    public Card(String colour, String value) {
+    public Card(Colour colour) {
         this.colour = colour;
-        this.value = value;
     }
 
-    public String getColour() {
+    public Colour getColour() {
         return colour;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return colour + " " + value;
     }
 
 }
