@@ -1,4 +1,4 @@
-public class Card {
+public abstract class Card {
     public enum Colour {
         RED,
         GREEN,
@@ -8,7 +8,7 @@ public class Card {
     }
     private final Colour colour;
     protected Colour wildColor;
-    private int pointValue;
+    protected int pointValue;
 
     public Card(Colour colour) {
         this.colour = colour;
@@ -18,4 +18,7 @@ public class Card {
         return colour;
     }
 
+    public int getPointValue() {
+        return pointValue;
+    }
 }

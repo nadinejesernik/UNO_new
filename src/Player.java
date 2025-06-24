@@ -34,6 +34,14 @@ public abstract class Player {
         System.out.println();
     }
 
+    public int totalPointValueOfHand() {
+        int sum = 0;
+        for (Card card : this.hand) {
+            sum += card.pointValue;
+        }
+        return sum;
+    }
+
     //Getter&Setter
 
     public String getPlayerName() {

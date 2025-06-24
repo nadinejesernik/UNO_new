@@ -11,6 +11,11 @@ public class ActionCard extends Card {
     public ActionCard(Colour colour, Action action) {
         super(colour);
         this.action = action;
+        if (colour == Colour.WILD) {
+            super.pointValue = 50;
+        } else {
+            super.pointValue = 20;
+        }
     }
 
     public void playAction() {

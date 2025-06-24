@@ -4,6 +4,7 @@ public class NumbersCard extends Card {
     public NumbersCard(Colour colour, int value) {
         super(colour);
         this.value = value;
+        super.pointValue = value;
     }
 
     @Override
