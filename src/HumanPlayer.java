@@ -10,8 +10,14 @@ public class HumanPlayer extends Player {
         Scanner input = new Scanner(System.in);
         String inputString;
         showHand();
+        ActionManager.setCurrentPlayer(this); //to tell ActionManager which Player to reference
 
         while (true) {
+
+            if (Cheater) {
+                Cheater = false;
+            }
+
             System.out.println("Which card would you like to play? (1-" + hand.size() + ")");
             inputString = input.nextLine();
 
@@ -34,6 +40,7 @@ public class HumanPlayer extends Player {
             DiscardPile.cardPlayed(cardToPlay);
         } else {
             System.out.println("This card is not valid. You draw 1 card as punishment.");
+            PlayerDrawsCard();
             // PunishmentManager.InvalidCard();
         }
     }

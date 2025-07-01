@@ -5,20 +5,26 @@ import java.util.Random;
 
 public class CompPlayer extends Player {
 
-    private int attention;
+    private int attention; //to determine if COM will make a mistake when putting card down
+    private int patience; //to determine if COM accuses someone of cheating when putting down a Draw 4
     private final Random rand = new Random();
 
     public CompPlayer(String name) {
         super(name);
         attention = rand.nextInt(5,11); //Put attention between 5 (distracted) and 10 (focused) to determine how likely COM is to put a wrong card
+        patience = rand.nextInt(1,11); //Put patience between 1 (impatient) an 10 (patient) to determine how likely COM is to accuse someone of cheating
     }
 
     @Override
     public void playCard() {
         List<Card> hand = getHand();
         List<Card> validCards = new ArrayList<>();
+        ActionManager.setCurrentPlayer(this); //to tell ActionManager which Player to reference
 
-        // Identify valid cards based on global DiscardPile
+        if (Cheater) {
+            Cheater = false;
+        }
+
         for (Card c : hand) {
             if (CardValidity.isValidCard(c)) { //check if card is valid through CardValidity
                 validCards.add(c);
@@ -46,7 +52,7 @@ public class CompPlayer extends Player {
                 System.out.println(getPlayerName() + " made a mistake. Played invalid card. Drawing instead.");
                 Card drawn = CardDeck.drawCard();
                 hand.add(drawn);
-                System.out.println(getPlayerName() + " drew: " + drawn);
+                System.out.println(getPlayerName() + " drew: " + drawn); //only to show if it works
             }
 
         }
@@ -56,7 +62,7 @@ public class CompPlayer extends Player {
             System.out.println(getPlayerName() + " had no valid cards. Drawing...");
             Card drawn = CardDeck.drawCard();
             hand.add(drawn);
-            System.out.println(getPlayerName() + " drew: " + drawn);
+            System.out.println(getPlayerName() + " drew: " + drawn); //only to show if it works
 
             if (CardValidity.isValidCard(drawn)) {
                 if (drawn instanceof ActionCard) {

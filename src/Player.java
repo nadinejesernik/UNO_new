@@ -4,7 +4,7 @@ public abstract class Player {
     protected String playerName;
     protected ArrayList<Card> hand;
     protected int currentHandValue; //to keep track of point value of cards currently in hand
-    //protected boolean Cheater = false;
+    protected boolean Cheater = false;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -66,5 +66,13 @@ public abstract class Player {
 
     public void setCurrentHandValue(int currentHandValue) {
         this.currentHandValue = currentHandValue;
+    }
+
+    public boolean isCheater() {
+        return Cheater;
+    }
+
+    public void setCheater(boolean cheater) {
+        Cheater = cheater;
     }
 }

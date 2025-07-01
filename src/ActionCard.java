@@ -31,11 +31,11 @@ public class ActionCard extends Card {
                 break;
             case Action.WILD:
                 //method enact wild
-                super.wildColor = Colour.RED; //placeholder
+                super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer()); //placeholder
                 break;
             case Action.DRAW_FOUR:
-                //method enact draw four
-                super.wildColor = Colour.RED; //placeholder
+                ActionManager.drawFourCheck(ActionManager.getCurrentPlayer());
+                super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());
                 break;
         }
     }
