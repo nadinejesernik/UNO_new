@@ -27,13 +27,15 @@ public class ActionCard extends Card {
                 //method enact reverse
                 break;
             case Action.DRAW_TWO:
-                //method enact draw two
+                System.out.println("The next player draws two cards");
+                ActionManager.setDraw(true);
                 break;
             case Action.WILD:
-                //method enact wild
-                super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer()); //placeholder
+                super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());
                 break;
             case Action.DRAW_FOUR:
+                System.out.println("The next player draws four cards");
+                ActionManager.setDraw(true);
                 ActionManager.drawFourCheck(ActionManager.getCurrentPlayer());
                 super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());
                 break;

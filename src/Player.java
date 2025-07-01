@@ -27,6 +27,31 @@ public abstract class Player {
 
     public abstract void playCard(); //to be implemented by subclasses
 
+    public boolean checkForDraw(){
+
+        if(!ActionManager.isDraw()){
+            return false;
+        }
+
+        Card topCard = DiscardPile.showTopCard();
+        if(topCard instanceof ActionCard){
+            ActionCard.Action action = ((ActionCard) topCard).getAction();
+
+            if (action == ActionCard.Action.DRAW_TWO){
+                ActionManager.drawTwo(this);
+                ActionManager.setDraw(false);
+                return true;
+            }
+
+            else if(action == ActionCard.Action.DRAW_FOUR){
+                ActionManager.drawFour(this);
+                ActionManager.setDraw(false);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void showHand() {
         for (Card card : this.hand) {
             System.out.print(card + " || ");

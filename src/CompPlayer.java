@@ -11,8 +11,8 @@ public class CompPlayer extends Player {
 
     public CompPlayer(String name) {
         super(name);
-        attention = rand.nextInt(5,11); //Put attention between 5 (distracted) and 10 (focused) to determine how likely COM is to put a wrong card
-        patience = rand.nextInt(1,11); //Put patience between 1 (impatient) an 10 (patient) to determine how likely COM is to accuse someone of cheating
+        attention = rand.nextInt(5, 11); //Put attention between 5 (distracted) and 10 (focused) to determine how likely COM is to put a wrong card
+        patience = rand.nextInt(1, 11); //Put patience between 1 (impatient) an 10 (patient) to determine how likely COM is to accuse someone of cheating
     }
 
     @Override
@@ -24,56 +24,62 @@ public class CompPlayer extends Player {
         if (Cheater) {
             Cheater = false;
         }
-
-        for (Card c : hand) {
-            if (CardValidity.isValidCard(c)) { //check if card is valid through CardValidity
-                validCards.add(c);
-            }
+        if (checkForDraw()) { //if checkForDraw returns true, turn is skipped
+            return;
         }
 
-        boolean makesMistake = rand.nextInt(10) >= attention; //to establish whether COM will make a mistake or not
-        Card chosenCard;
+        while (true) {
 
-        if (!validCards.isEmpty()) {
-            if (!makesMistake) {// if COM is not making a mistake, choose a valid card randomly
-                chosenCard = validCards.get(rand.nextInt(validCards.size()));
-            } else {// if COM makes a mistake — may pick a random card (could be invalid)
-                chosenCard = hand.get(rand.nextInt(hand.size()));
+            for (Card c : hand) {
+                if (CardValidity.isValidCard(c)) { //check if card is valid through CardValidity
+                    validCards.add(c);
+                }
             }
 
-            if (CardValidity.isValidCard(chosenCard)) {
-                if (chosenCard instanceof ActionCard) {
-                    ((ActionCard) chosenCard).playAction();
+            boolean makesMistake = rand.nextInt(10) >= attention; //to establish whether COM will make a mistake or not
+            Card chosenCard;
+
+            if (!validCards.isEmpty()) {
+                if (!makesMistake) {// if COM is not making a mistake, choose a valid card randomly
+                    chosenCard = validCards.get(rand.nextInt(validCards.size()));
+                } else {// if COM makes a mistake — may pick a random card (could be invalid)
+                    chosenCard = hand.get(rand.nextInt(hand.size()));
                 }
-                hand.remove(chosenCard);
-                DiscardPile.cardPlayed(chosenCard);
-                System.out.println(getPlayerName() + " played: " + chosenCard + " (Attention: " + attention + ")"); //sout so human Players know what is happening
+
+                if (CardValidity.isValidCard(chosenCard)) {
+                    if (chosenCard instanceof ActionCard) {
+                        ((ActionCard) chosenCard).playAction();
+                    }
+                    hand.remove(chosenCard);
+                    DiscardPile.cardPlayed(chosenCard);
+                    System.out.println(getPlayerName() + " played: " + chosenCard + " (Attention: " + attention + ")"); //sout so human Players know what is happening
+                    break;
+                } else {
+                    System.out.println(getPlayerName() + " made a mistake. Played invalid card. Drawing instead.");
+                    Card drawn = CardDeck.drawCard();
+                    hand.add(drawn);
+                    System.out.println(getPlayerName() + " drew: " + drawn); //only to show if it works
+                    break;
+                }
+
             } else {
-                System.out.println(getPlayerName() + " made a mistake. Played invalid card. Drawing instead.");
+                // No valid cards — must draw a card
+                System.out.println(getPlayerName() + " had no valid cards. Drawing...");
                 Card drawn = CardDeck.drawCard();
                 hand.add(drawn);
                 System.out.println(getPlayerName() + " drew: " + drawn); //only to show if it works
-            }
 
-        }
-
-        else {
-            // No valid cards — must draw a card
-            System.out.println(getPlayerName() + " had no valid cards. Drawing...");
-            Card drawn = CardDeck.drawCard();
-            hand.add(drawn);
-            System.out.println(getPlayerName() + " drew: " + drawn); //only to show if it works
-
-            if (CardValidity.isValidCard(drawn)) {
-                if (drawn instanceof ActionCard) {
-                    ((ActionCard) drawn).playAction();
+                if (CardValidity.isValidCard(drawn)) {
+                    if (drawn instanceof ActionCard) {
+                        ((ActionCard) drawn).playAction();
+                    }
+                    hand.remove(drawn);
+                    DiscardPile.cardPlayed(drawn);
+                    System.out.println(getPlayerName() + " played the drawn card: " + drawn);
+                    break;
                 }
-                hand.remove(drawn);
-                DiscardPile.cardPlayed(drawn);
-                System.out.println(getPlayerName() + " played the drawn card: " + drawn);
             }
         }
-
 
     }
 
