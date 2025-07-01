@@ -85,6 +85,11 @@ public class CompPlayer extends Player {
                     System.out.println(getPlayerName() + " played the drawn card: " + drawn);
                     break;
                 }
+
+                else {
+                    break;
+                }
+
             }
         }
 
