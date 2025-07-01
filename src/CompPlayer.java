@@ -28,6 +28,13 @@ public class CompPlayer extends Player {
             return;
         }
 
+        if(ActionManager.isSkipped()) {
+            ActionManager.setSkipped(false);
+            System.out.println("Your turn has been skipped.");
+            return;
+        }
+
+
         while (true) {
 
             for (Card c : hand) {

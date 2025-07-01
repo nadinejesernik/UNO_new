@@ -21,7 +21,7 @@ public class ActionCard extends Card {
     public void playAction() {
         switch (action) {
             case Action.SKIP:
-                //method enact skip
+                ActionManager.skipNextPlayer(); //sets isSkipped to true to be checked in playCard method
                 break;
             case Action.REVERSE:
                 //method enact reverse

@@ -17,6 +17,12 @@ public class HumanPlayer extends Player {
             return;
         }
 
+        if (ActionManager.isSkipped()) {
+            System.out.println("Your turn has been skipped.");
+            ActionManager.setSkipped(false);
+            return;
+        }
+
         showHand(); //only show hand if turn isn't skipped
 
         while (true) {
@@ -25,31 +31,31 @@ public class HumanPlayer extends Player {
                 Cheater = false;
             }
 
-                System.out.println("Which card would you like to play? (1-" + hand.size() + ")");
-                inputString = input.nextLine();
+            System.out.println("Which card would you like to play? (1-" + hand.size() + ")");
+            inputString = input.nextLine();
 
-                if (CheckInput.splitCheckInput(inputString, this)) {
-                    break; // Valid input
-                }
-                // Invalid input -> re-prompt
+            if (CheckInput.splitCheckInput(inputString, this)) {
+                break; // Valid input
             }
+            // Invalid input -> re-prompt
+        }
 
-            String[] inputArray = inputString.trim().split("\\s+");
-            int cardIndex = Integer.parseInt(inputArray[0]);
+        String[] inputArray = inputString.trim().split("\\s+");
+        int cardIndex = Integer.parseInt(inputArray[0]);
 
-            Card cardToPlay = hand.get(cardIndex - 1);
+        Card cardToPlay = hand.get(cardIndex - 1);
 
-            if (CardValidity.isValidCard(cardToPlay)) {
-                if (cardToPlay instanceof ActionCard) {
-                    ((ActionCard) cardToPlay).playAction();
-                }
-                hand.remove(cardIndex - 1);
-                DiscardPile.cardPlayed(cardToPlay);
-            } else {
-                System.out.println("This card is not valid. You draw 1 card as punishment.");
-                PlayerDrawsCard();
-                // PunishmentManager.InvalidCard();
+        if (CardValidity.isValidCard(cardToPlay)) {
+            if (cardToPlay instanceof ActionCard) {
+                ((ActionCard) cardToPlay).playAction();
             }
+            hand.remove(cardIndex - 1);
+            DiscardPile.cardPlayed(cardToPlay);
+        } else {
+            System.out.println("This card is not valid. You draw 1 card as punishment.");
+            PlayerDrawsCard();
+            // PunishmentManager.InvalidCard();
+        }
 
     }
 
