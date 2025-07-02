@@ -4,6 +4,7 @@ public class Table {
     static Player[] players;
     static int humanCount;
     static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<Player, Integer>();
+
     public static void GameInitialisation() {
         players = PlayerInitialiser.initializePlayers();
         PlayerInitialiser.showPlayers(players);

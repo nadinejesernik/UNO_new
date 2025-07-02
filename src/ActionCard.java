@@ -24,7 +24,7 @@ public class ActionCard extends Card {
                 ActionManager.skipNextPlayer(); //sets isSkipped to true to be checked in playCard method
                 break;
             case Action.REVERSE:
-                //method enact reverse
+                //meth to enact reverse
                 break;
             case Action.DRAW_TWO:
                 System.out.println("The next player draws two cards");
