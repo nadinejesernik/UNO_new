@@ -10,6 +10,7 @@ public class ActionManager {
     private static boolean isDraw;
     private static boolean isSkipped;
 
+
     public static void setCurrentPlayer(Player player) {
         currentPlayer = player;
     } //kept getting NullPointerException with Menu.currentPlayer
@@ -19,13 +20,12 @@ public class ActionManager {
         setSkipped(true);
     }
 
-    public static void reverseOrder(Player[] players) {
-        System.out.println("Play direction is reversed!");
-        //Reverse Array direction
+    public static void reverseOrder() {
+        System.out.println("Order reversed");
     }
 
     public static void drawTwo(Player player) {
-        //Called on current player if topCard is Draw 2?
+        //Called on current player if topCard is Draw 2
         System.out.println(player.getPlayerName() + " must draw 2 cards. Your turn is skipped.");
         player.PlayerDrawsCard();
         player.PlayerDrawsCard();

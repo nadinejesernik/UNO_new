@@ -20,7 +20,7 @@ public class CardDeck {
     }
 
     public static Card drawCard() {
-        if (currentDeck.size() == 0) {
+        if (currentDeck.isEmpty()) {
             reshuffleDeck(DiscardPile.returnDiscardPile());
         }
 
@@ -36,5 +36,11 @@ public class CardDeck {
     public static void reshuffleDeck(ArrayList<Card> discardPile) {
         Collections.shuffle(discardPile);
         currentDeck = discardPile;
+    }
+
+    public static void returnWrongCardsToDeck(ArrayList<Card> discardPile) {
+        //wird am Anfang des Spiels benutzt um zu garantieren, dass keine Aktionskarte die erste TopCard ist
+        Collections.shuffle(discardPile);
+        currentDeck.addAll(discardPile);
     }
 }

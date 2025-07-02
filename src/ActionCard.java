@@ -7,7 +7,7 @@ public class ActionCard extends Card {
         DRAW_FOUR
     }
 
-    private Action action;
+    private final Action action;
     public ActionCard(Colour colour, Action action) {
         super(colour);
         this.action = action;
@@ -21,23 +21,21 @@ public class ActionCard extends Card {
     public void playAction() {
         switch (action) {
             case Action.SKIP:
-                ActionManager.skipNextPlayer(); //sets isSkipped to true to be checked in playCard method
+                //method enact skip
                 break;
             case Action.REVERSE:
                 //method enact reverse
                 break;
             case Action.DRAW_TWO:
-                System.out.println("The next player draws two cards");
-                ActionManager.setDraw(true);
+                //method enact draw two
                 break;
             case Action.WILD:
-                super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());
+                //method enact wild
+                super.wildColor = Colour.RED; //placeholder
                 break;
             case Action.DRAW_FOUR:
-                System.out.println("The next player draws four cards");
-                ActionManager.setDraw(true);
-                ActionManager.drawFourCheck(ActionManager.getCurrentPlayer());
-                super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());
+                //method enact draw four
+                super.wildColor = Colour.RED; //placeholder
                 break;
         }
     }
