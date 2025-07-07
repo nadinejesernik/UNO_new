@@ -90,8 +90,10 @@ public class CompPlayer extends Player {
                     break;
                 }
 
+
             }
         }
+                System.out.println("_____________");
 
     }
 

@@ -27,14 +27,12 @@ public class ActionCard extends Card {
                 //meth to enact reverse
                 break;
             case Action.DRAW_TWO:
-                System.out.println("The next player draws two cards");
                 ActionManager.setDraw(true);
                 break;
             case Action.WILD:
                 super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());
                 break;
             case Action.DRAW_FOUR:
-                System.out.println("The next player draws four cards");
                 ActionManager.setDraw(true);
                 ActionManager.drawFourCheck(ActionManager.getCurrentPlayer());
                 super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());

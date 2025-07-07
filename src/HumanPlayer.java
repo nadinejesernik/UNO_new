@@ -62,6 +62,7 @@ public class HumanPlayer extends Player {
             PlayerDrawsCard();
             // PunishmentManager.InvalidCard();
         }
+        System.out.println("_____________");
 
     }
 
