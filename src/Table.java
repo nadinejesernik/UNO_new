@@ -3,19 +3,14 @@ import java.util.HashMap;
 public class Table {
     static Player[] players;
     static int humanCount;
-    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<>();
-
+    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<Player, Integer>();
     public static void GameInitialisation() {
         players = PlayerInitialiser.initializePlayers();
         PlayerInitialiser.showPlayers(players);
         players = PlayerInitialiser.chooseFirstPlayer(players);
 
         CardDeck.buildFreshDeck();
-        do {
-            DiscardPile.cardPlayed(CardDeck.drawCard());
-        } while (DiscardPile.showTopCard() instanceof ActionCard );
-        CardDeck.returnWrongCardsToDeck(DiscardPile.returnDiscardPile());
-
+        DiscardPile.cardPlayed(CardDeck.drawCard());
         for (Player player : players) {
             player.setHand(CardDeck.createHand());
         }
@@ -49,7 +44,7 @@ public class Table {
     //placeholder Funktion um abzuchecken ob ein Spieler keine Karten mehr hat
     public static boolean winnerCheck() {
         for (Player player : players) {
-            if (player.hand.isEmpty()) {
+            if (player.hand.size() == 0) {
                 winnerAndPointsPerRound.put(player,pointsForWinner());
                 System.out.println(player.playerName + " is the Winner of this Round!");
                 System.out.println("They earned " + pointsForWinner() + " points!");

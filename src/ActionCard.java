@@ -24,7 +24,7 @@ public class ActionCard extends Card {
                 //method enact skip
                 break;
             case Action.REVERSE:
-                //method enact reverse
+                //meth to enact reverse
                 break;
             case Action.DRAW_TWO:
                 //method enact draw two
