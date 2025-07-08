@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Table {
-    static Player[] players;
+    static ArrayList<Player> players = new ArrayList<>();
     static int humanCount;
 //    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<>();
     static ArrayList<Player> winnerPerRound = new ArrayList<>();
@@ -41,6 +41,11 @@ public class Table {
     public static void GamePlay() {
         while(!winnerCheck()) {
             for (Player player : players) {
+
+                if (player != ActionManager.getCurrentPlayer()) {
+                    continue; // skip until we reach the current one
+                }
+
                 System.out.println("The card on top of the deck is: " + DiscardPile.showTopCard()); //Karte wird hier angezeigt egal ob Mensch oder Bot
 
                 if (player instanceof HumanPlayer) {
@@ -75,8 +80,11 @@ public class Table {
                     }
                     break;
                 }
-            }
 
+                ActionManager.advanceTurn();
+
+                break;
+            }
         }
     }
 

@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class ActionManager {
 
@@ -9,19 +6,31 @@ public class ActionManager {
     private static Player currentPlayer;
     private static boolean isDraw;
     private static boolean isSkipped;
+    private static ArrayList<Player> players;
+    private static boolean isClockwise = true;
+    private static int currentIndex = 0;
 
 
     public static void setCurrentPlayer(Player player) {
         currentPlayer = player;
-    } //kept getting NullPointerException with Menu.currentPlayer
+    }
 
+    public static void initializePlayers(ArrayList<Player> playerList) {
+        players = playerList;
+    }
 
     public static void skipNextPlayer() {
         setSkipped(true);
     }
 
     public static void reverseOrder() {
-        System.out.println("Order reversed");
+        isClockwise = !isClockwise;
+        System.out.println("Turn order reversed! Now playing " + (isClockwise ? "clockwise" : "counter-clockwise"));
+    }
+
+    public static void advanceTurn() {
+        int step = isClockwise ? 1 : -1;
+        currentIndex = (currentIndex + step + players.size()) % players.size();
     }
 
     public static void drawTwo(Player player) {
@@ -71,8 +80,8 @@ public class ActionManager {
         if (player instanceof HumanPlayer) {
 
             //Card.Colour chosen = null;
-            System.out.println(player.getPlayerName() + ", choose a color ("+"\u001B[31m" + "Red" +"\u001B[0m"+", " +
-                    "\u001B[32m" + "Green" + "\u001B[0m" +", "+ "\u001B[34m" +  "Blue" + "\u001B[0m" +  ", " +
+            System.out.println(player.getPlayerName() + ", choose a color (" + "\u001B[31m" + "Red" + "\u001B[0m" + ", " +
+                    "\u001B[32m" + "Green" + "\u001B[0m" + ", " + "\u001B[34m" + "Blue" + "\u001B[0m" + ", " +
                     "\u001B[33m" + "Yellow" + "\u001B[0m" + "):");
             while (true) {
                 String input = scanner.nextLine().trim().toUpperCase();
@@ -108,7 +117,7 @@ public class ActionManager {
     }
 
     public static Player getCurrentPlayer() {
-        return currentPlayer;
+        return players.get(currentIndex);
     }
 
     public static boolean isDraw() {
@@ -126,4 +135,5 @@ public class ActionManager {
     public static void setSkipped(boolean skipped) {
         isSkipped = skipped;
     }
+
 }

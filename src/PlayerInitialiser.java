@@ -1,27 +1,14 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class PlayerInitialiser {
-    public static Player[] initializePlayers() {
+    public static ArrayList<Player> initializePlayers() {
         Scanner scanner = new Scanner(System.in);
-        //  int playerCount = -1; //initialise with invalid value to start while loop
-
-        // while (playerCount <= 1 ) {
-        //   System.out.println("How many players should play in this game? Enter a number higher than 1");
-        //   if (scanner.hasNextInt()) {
-        //      playerCount = scanner.nextInt();
-        //     if (playerCount < 1) {
-       // System.out.println("Please enter a number higher than 1");
-        //     }
-        //    }
-        //   else {
-        //    System.out.println("Invalid input. Please try again.");
-        //    scanner.next(); //clear buffer
-        //  }
-        // }
 
         int playerCount = 4;
-        Player[] players = new Player[playerCount];
+        ArrayList<Player> players = new ArrayList<>();
 
         System.out.println("Welcome! " + playerCount + " players are now playing!");
 
@@ -46,34 +33,34 @@ public class PlayerInitialiser {
         for (int i = 0; i < humanCount; i++) {
             System.out.print("Enter a name for Player " + (i + 1) + " ");
             String name = scanner.nextLine();
-            players[i] = new HumanPlayer(name);
+            players.add(new HumanPlayer(name));
         }
 
         // fill with comp players
         for (int i = humanCount; i < playerCount; i++) {
-            players[i] = new CompPlayer("COM" + (i + 1));
+            players.add(new CompPlayer("COM" + (i + 1)));
         }
 
         return players;
     }
 
-    public static void showPlayers(Player[] players) {
+    public static void showPlayers(List<Player> players) {
         System.out.println("\nPlayers: ");
         for (Player p : players) {
             System.out.println(p.getClass().getSimpleName() + ": " + p.getPlayerName());
         }
     }
 
-    public static Player[] chooseFirstPlayer(Player[] players) {
+    public static ArrayList<Player> chooseFirstPlayer(List<Player> players) {
         Random rand = new Random();
-        int firstPlayer = rand.nextInt(players.length);
+        int firstPlayer = rand.nextInt(players.size());
 
-        System.out.println("\nPlayer " + players[firstPlayer].getPlayerName() + " begins");
+        System.out.println("\nPlayer " + players.get(firstPlayer).getPlayerName() + " begins");
 
-        //create new Player array with the starting Player in the beginning
-        Player[] rotated = new Player[players.length];
-        for (int i = 0; i < players.length; i++) {
-            rotated[i] = players[(firstPlayer + i) % players.length]; //i.g. Player at index [3] starts in 4 player game: 3+0 % 4 = 3
+        // ✅ Rotate list so first player is at the front
+        ArrayList<Player> rotated = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++) {
+            rotated.add(players.get((firstPlayer + i) % players.size()));
         }
 
         return rotated;

@@ -13,6 +13,9 @@ public class HumanPlayer extends Player {
         String inputString;
         ActionManager.setCurrentPlayer(this); //to tell ActionManager which Player to reference
 
+        if (Cheater) {
+            Cheater = false;
+        }
 
         if (checkForDraw()) {
             return;
@@ -29,11 +32,7 @@ public class HumanPlayer extends Player {
         while (true) {
 
 
-            if (Cheater) {
-                Cheater = false;
-            }
-
-            if (checkAndDrawIfNoValidCards()){
+            if (checkAndDrawIfNoValidCards()) {
                 return;
             }
 
@@ -122,7 +121,6 @@ public class HumanPlayer extends Player {
 
         return false; // valid cards exist, proceed normally
     }
-
 
 
 }
