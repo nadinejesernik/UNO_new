@@ -36,6 +36,7 @@ public class ActionManager {
     public static void drawTwo(Player player) {
         //Called on current player if topCard is Draw 2
         System.out.println(player.getPlayerName() + " must draw 2 cards. Your turn is skipped.");
+        System.out.println("_____________");
         player.PlayerDrawsCard();
         player.PlayerDrawsCard();
     }
@@ -71,6 +72,7 @@ public class ActionManager {
     public static void drawFour(Player player) {
 
         System.out.println(player.getPlayerName() + " must draw 4 cards! Your turn is skipped.");
+        System.out.println("_____________");
         for (int i = 0; i < 4; i++) {
             player.PlayerDrawsCard();
         }

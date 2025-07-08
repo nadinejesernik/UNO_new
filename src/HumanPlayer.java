@@ -22,7 +22,8 @@ public class HumanPlayer extends Player {
         }
 
         if (ActionManager.isSkipped()) {
-            System.out.println("Your turn has been skipped.");
+            System.out.println(getPlayerName() + "'s turn has been skipped.");
+            System.out.println("_____________");
             ActionManager.setSkipped(false);
             return;
         }
@@ -100,6 +101,7 @@ public class HumanPlayer extends Player {
                         hand.remove(drawn);
                         DiscardPile.cardPlayed(drawn);
                         System.out.println(getPlayerName() + " played: " + drawn);
+                        System.out.println("_____________");
 
                         if (drawn instanceof ActionCard) {
                             ((ActionCard) drawn).playAction();
@@ -107,6 +109,7 @@ public class HumanPlayer extends Player {
                         return true;
                     } else if (input.equals("no")) {
                         System.out.println("Card not played. Turn ends.");
+                        System.out.println("_____________");
                         return true;
                     } else {
                         System.out.println("Invalid input. Please enter 'yes' or 'no'.");
@@ -115,6 +118,7 @@ public class HumanPlayer extends Player {
 
             } else {
                 System.out.println("The drawn card is not valid. Turn ends.");
+                System.out.println("_____________");
                 return true; // turn ends
             }
         }
