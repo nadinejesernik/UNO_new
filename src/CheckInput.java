@@ -2,13 +2,6 @@ import java.util.Scanner;
 
 public class CheckInput {
 
-//    static void splitInput(){
-//        Scanner scanner = new Scanner(System.in);
-//        String input = scanner.nextLine();
-//        String regex = "\\s+";
-//        String[] inputArray = input.split(regex);
-//    }
-
     static boolean splitCheckInput(String input, Player currentPlayer){
         String regex = "\\s+";
         String[] inputArray = input.trim().split(regex);
@@ -33,10 +26,10 @@ public class CheckInput {
             String command = inputArray[1];
             switch (command.toUpperCase()) {
                 case "UNO":
-                    System.out.println("UNO!");
+                    System.out.println("You said UNO!");
                     break;
                 default:
-                    System.out.println("We do not know that command, please try again.");
+                    System.out.println("Unknown command, please try again.");
                     return false;
             }
         }

@@ -4,71 +4,31 @@ public class Menu {
     static Player currentPlayer;
     static void mainMenu(Player player) { //momentaner Spieler als Parameter hinugefügt
         currentPlayer = player;
-        //GameLoop zum probieren
-        boolean playerWin = false;
-        int playerCount = 1;//wird durch index vom spieler ersetzt
-       // while (!playerWin) {
-            //Probieren ob theoretisch new Player Loop passiert
-            boolean nextPlayer = false;
-           // while (!nextPlayer && playerCount<4) {
-                System.out.println("it's " + currentPlayer.playerName + "'s turn");
-                System.out.println("Choose an option:");
-                System.out.println("1.Play");
-                System.out.println("2.Help");
-                System.out.println("3.Exit");
-                Scanner scanner = new Scanner(System.in);
-                String menuAuswahl = scanner.next();
-                switch (menuAuswahl) {
-                    case "1":
-//                        playGame(playerCount);
-//                        playerCount++;
-//                        if(playerCount==5){
-//                            playerCount =1;
-//                        }
-//                        nextPlayer=true;
-                        currentPlayer.playCard();
-                        break;
-                    case "2":
-                        help();
-                        break;
-                    case "3":
-                        exitGame();
-                        break;
-                    default:
-                        System.out.println("Wrong input, try again");
-                        mainMenu(currentPlayer);
-                        break;
-               // }
-         //   }
+
+        System.out.println("it's " + currentPlayer.playerName + "'s turn");
+        System.out.println("Choose an option:");
+        System.out.println("1.Play");
+        System.out.println("2.Help");
+        System.out.println("3.Exit");
+        Scanner scanner = new Scanner(System.in);
+        String menuAuswahl = scanner.next();
+        switch (menuAuswahl) {
+            case "1":
+                currentPlayer.playCard();
+                break;
+            case "2":
+                help();
+                break;
+            case "3":
+                exitGame();
+                break;
+            default:
+                System.out.println("Wrong input, try again");
+                mainMenu(currentPlayer);
+                break;
         }
     }
 
-    //momentan player Count später Name des Spielers
-    static void playGame(int playerCount) {
-        //hier sieht man die oberste Karte vom Stapel
-        System.out.println("Player " + currentPlayer.playerName + " these are your cards:");
-        //hier kommt showHand
-        //hier kommt die CardValidity
-        //the game checks if you have any card that you can lay;
-        // if not you get the message "you have no cards that you could lay down rn" and get a card added to your hand
-
-
-        // if you can lay something the game asks "which card would you like to lay?"
-
-//        while(true) {
-//            System.out.println("Which card would you like to play? 1-"+currentPlayer.hand.size());//+HandArray.length//
-//            if(CheckInput.splitCheckInput(currentPlayer)){
-//                break;
-//            }
-//        }
-
-        // that gets split and checked
-        // if everything is good the card gets put on the discard pile
-        // and if there is a second command that one also goes
-        // if wrong card put down you get a penalty
-        // with that your turn concludes
-
-    }
     static void help() {
         System.out.println("=== HOW TO PLAY UNO ===");
 

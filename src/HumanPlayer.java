@@ -8,7 +8,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public void playCard() { //topcard parameter entfernt, übernimmt static DiscardPile. return value auf void gesetzt.
+    public void playCard() {
         Scanner input = new Scanner(System.in);
         String inputString;
         ActionManager.setCurrentPlayer(this); //to tell ActionManager which Player to reference
@@ -57,6 +57,7 @@ public class HumanPlayer extends Player {
             }
             hand.remove(cardIndex - 1);
             DiscardPile.cardPlayed(cardToPlay);
+
         } else {
             System.out.println("This card is not valid. You draw 1 card as punishment.");
             PlayerDrawsCard();

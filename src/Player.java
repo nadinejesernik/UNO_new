@@ -6,6 +6,7 @@ public abstract class Player {
     protected boolean Cheater = false;
     protected int points = 0;
 
+
     public Player(String playerName) {
         this.playerName = playerName;
 //        hand = CardDeck.createHand();

@@ -28,6 +28,7 @@ public class Table {
     }
 
     public static void setupNewRound() {
+        System.out.println("_____ Setting up new Round _____");
         CardDeck.clearDeck();
         DiscardPile.clearDiscardPile();
         for (Player player : players) {
@@ -45,35 +46,37 @@ public class Table {
                 if (player instanceof HumanPlayer) {
                     Menu.mainMenu(player);
                 } else {
-                    if (humanCount == 0 || debug) {
+                    if (humanCount == 0) {
                         player.showHand();
-//                        try {
-//                            Thread.sleep(100);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
                     }
                     player.playCard();
+                }
 
-                    if (winnerCheck()) {
-                        winnerPerRound.add(player);
-                        System.out.println(player.playerName + " is the Winner of this Round!");
-                        System.out.println("They earned " + pointsForWinner() + " points!");
+                if (winnerCheck()) {
+                    winnerPerRound.add(player);
+                    System.out.println(player.playerName + " is the Winner of this Round!");
+                    System.out.println("They earned " + pointsForWinner() + " points!");
 
-                        player.points += pointsForWinner();
-                        System.out.println(player.playerName + " has "+player.points+" total points!");
+                    player.points += pointsForWinner();
+                    System.out.println(player.playerName + " has " + player.points + " total points!");
 
-                        if (player.points >= 500) {
-                            playing = false;
-                            System.out.println(player.playerName + " has reached over 500 Points!");
-                            System.out.println("They are the winner of this Game!");
-
-                            System.exit(0);
-                        }
-                        break;
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+
+                    if (player.points >= 500) {
+                        playing = false;
+                        System.out.println(player.playerName + " has reached over 500 Points!");
+                        System.out.println("They are the winner of this Game!");
+
+                        System.exit(0);
+                    }
+                    break;
                 }
             }
+
         }
     }
 
