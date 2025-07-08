@@ -40,23 +40,6 @@ public class Table {
     public static void GamePlay() {
         while(!winnerCheck()) {
             for (Player player : players) {
-                if (winnerCheck()) {
-                    winnerPerRound.add(player);
-                    System.out.println(player.playerName + " is the Winner of this Round!");
-                    System.out.println("They earned " + pointsForWinner() + " points!");
-
-                    player.points += pointsForWinner();
-                    System.out.println(player.playerName + " has "+player.points+" total points!");
-
-                    if (player.points >= 500) {
-                        playing = false;
-                        System.out.println(player.playerName + " has reached over 500 Points!");
-                        System.out.println("They are the winner of this Game!");
-
-                        System.exit(0);
-                    }
-                    break;
-                }
                 System.out.println("The card on top of the deck is: " + DiscardPile.showTopCard()); //Karte wird hier angezeigt egal ob Mensch oder Bot
 
                 if (player instanceof HumanPlayer) {
@@ -71,6 +54,24 @@ public class Table {
 //                        }
                     }
                     player.playCard();
+
+                    if (winnerCheck()) {
+                        winnerPerRound.add(player);
+                        System.out.println(player.playerName + " is the Winner of this Round!");
+                        System.out.println("They earned " + pointsForWinner() + " points!");
+
+                        player.points += pointsForWinner();
+                        System.out.println(player.playerName + " has "+player.points+" total points!");
+
+                        if (player.points >= 500) {
+                            playing = false;
+                            System.out.println(player.playerName + " has reached over 500 Points!");
+                            System.out.println("They are the winner of this Game!");
+
+                            System.exit(0);
+                        }
+                        break;
+                    }
                 }
             }
         }
