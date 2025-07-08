@@ -7,6 +7,9 @@ public class Table {
     static ArrayList<Player> winnerPerRound = new ArrayList<>();
     static boolean debug = true;
     static boolean playing = true;
+    public static int currentRound = 1; //for db use
+
+
     public static void GameInitialisation() {
         players = PlayerInitialiser.initializePlayers();
         PlayerInitialiser.showPlayers(players);
@@ -64,6 +67,10 @@ public class Table {
 
                     player.points += pointsForWinner();
                     System.out.println(player.playerName + " has " + player.points + " total points!");
+
+                    DBManager.saveScoresForRound(1, currentRound, players); //GameID 1 since we only have 1 game
+                    currentRound++;
+
 
                     try {
                         Thread.sleep(100);
