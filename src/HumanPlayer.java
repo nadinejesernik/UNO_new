@@ -57,6 +57,10 @@ public class HumanPlayer extends Player {
             }
             hand.remove(cardIndex - 1);
             DiscardPile.cardPlayed(cardToPlay);
+            if (hand.size() == 1 && !hasDeclaredUNO()) {
+                PunishmentManager.noUNOCalled(this);
+            }
+            resetUNODeclaration();
 
         } else {
             System.out.println("This card is not valid. You draw 1 card as punishment.");

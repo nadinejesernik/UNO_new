@@ -26,7 +26,8 @@ public class CheckInput {
             String command = inputArray[1];
             switch (command.toUpperCase()) {
                 case "UNO":
-                    System.out.println("You said UNO!");
+                    System.out.println(currentPlayer.playerName +": UNO!");
+                    currentPlayer.declareUNO();
                     break;
                 default:
                     System.out.println("Unknown command, please try again.");

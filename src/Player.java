@@ -5,6 +5,19 @@ public abstract class Player {
     protected ArrayList<Card> hand;
     protected boolean Cheater = false;
     protected int points = 0;
+    protected boolean saidUNO = false;
+
+    public void declareUNO() {
+        saidUNO = true;
+    }
+
+    public boolean hasDeclaredUNO() {
+        return saidUNO;
+    }
+
+    public void resetUNODeclaration() {
+        saidUNO = false;
+    }
 
 
     public Player(String playerName) {
