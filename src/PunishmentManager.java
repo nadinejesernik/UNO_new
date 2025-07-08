@@ -1,7 +1,6 @@
 public class PunishmentManager {
     public static void invalidCard(Player player) {
-        System.out.println("The card you chose cannot be played on " + DiscardPile.showTopCard() + ".");
-        System.out.println(player.getPlayerName() + " must draw 1 card as punishment.");
+        System.out.println("This card is not valid. "+player.playerName+" draws 1 card as punishment");
         player.PlayerDrawsCard();
     }
 

@@ -63,9 +63,10 @@ public class HumanPlayer extends Player {
             resetUNODeclaration();
 
         } else {
-            System.out.println("This card is not valid. You draw 1 card as punishment.");
-            PlayerDrawsCard();
-            // PunishmentManager.InvalidCard();
+//            System.out.println("This card is not valid. You draw 1 card as punishment.");
+//            PlayerDrawsCard();
+            PunishmentManager.invalidCard(this);
+
         }
         System.out.println("_____________");
 
