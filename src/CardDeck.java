@@ -43,4 +43,8 @@ public class CardDeck {
         Collections.shuffle(discardPile);
         currentDeck.addAll(discardPile);
     }
+
+    public static void clearDeck() {
+        currentDeck.clear();
+    }
 }

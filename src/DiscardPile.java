@@ -18,4 +18,8 @@ public class DiscardPile {
         discardPile.add(returnPile.removeLast());
         return returnPile; // --  mit dem CardDeck verbunden
     }
+
+    public static void clearDiscardPile() {
+        discardPile.clear();
+    }
 }

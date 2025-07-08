@@ -4,6 +4,7 @@ public abstract class Player {
     protected String playerName;
     protected ArrayList<Card> hand;
     protected boolean Cheater = false;
+    protected int points = 0;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -43,7 +44,7 @@ public abstract class Player {
 
     public void showHand() {
         for (Card card : this.hand) {
-            System.out.print(card + " || ");
+            System.out.print("|"+ (hand.indexOf(card)+1) +"| " + card + " ");
         }
         System.out.println();
     }

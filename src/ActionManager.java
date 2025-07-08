@@ -71,7 +71,9 @@ public class ActionManager {
         if (player instanceof HumanPlayer) {
 
             //Card.Colour chosen = null;
-            System.out.println(player.getPlayerName() + ", choose a color (Red, Green, Blue, Yellow):");
+            System.out.println(player.getPlayerName() + ", choose a color ("+"\u001B[31m" + "Red" +"\u001B[0m"+", " +
+                    "\u001B[32m" + "Green" + "\u001B[0m" +", "+ "\u001B[34m" +  "Blue" + "\u001B[0m" +  ", " +
+                    "\u001B[33m" + "Yellow" + "\u001B[0m" + "):");
             while (true) {
                 String input = scanner.nextLine().trim().toUpperCase();
                 try {

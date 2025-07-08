@@ -105,6 +105,7 @@ public class Menu {
 
         System.out.println("Your goal is to be the first to play all your cards, which makes you the winner of the round and awards you points.");
         System.out.println("And whoever reaches 500 points first is the WINNER! Good luck!");
+        mainMenu(currentPlayer);
     }
     static void exitGame() {
         Scanner scanner = new Scanner(System.in);

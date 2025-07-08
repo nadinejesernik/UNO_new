@@ -1,14 +1,21 @@
-import java.util.HashMap;
+import java.util.*;
 
 public class Table {
     static Player[] players;
     static int humanCount;
-    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<>();
+//    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<>();
+    static ArrayList<Player> winnerPerRound = new ArrayList<>();
+    static boolean debug = true;
+    static boolean playing = true;
     public static void GameInitialisation() {
         players = PlayerInitialiser.initializePlayers();
         PlayerInitialiser.showPlayers(players);
         players = PlayerInitialiser.chooseFirstPlayer(players);
 
+        freshDeckAndHands();
+    }
+
+    public static void freshDeckAndHands() {
         CardDeck.buildFreshDeck();
         do {
             DiscardPile.cardPlayed(CardDeck.drawCard());
@@ -20,10 +27,34 @@ public class Table {
         }
     }
 
+    public static void setupNewRound() {
+        CardDeck.clearDeck();
+        DiscardPile.clearDiscardPile();
+        for (Player player : players) {
+            player.hand.clear();
+        }
+
+        freshDeckAndHands();
+    }
+
     public static void GamePlay() {
         while(!winnerCheck()) {
             for (Player player : players) {
                 if (winnerCheck()) {
+                    winnerPerRound.add(player);
+                    System.out.println(player.playerName + " is the Winner of this Round!");
+                    System.out.println("They earned " + pointsForWinner() + " points!");
+
+                    player.points += pointsForWinner();
+                    System.out.println(player.playerName + " has "+player.points+" total points!");
+
+                    if (player.points >= 500) {
+                        playing = false;
+                        System.out.println(player.playerName + " has reached over 500 Points!");
+                        System.out.println("They are the winner of this Game!");
+
+                        System.exit(0);
+                    }
                     break;
                 }
                 System.out.println("The card on top of the deck is: " + DiscardPile.showTopCard()); //Karte wird hier angezeigt egal ob Mensch oder Bot
@@ -31,10 +62,10 @@ public class Table {
                 if (player instanceof HumanPlayer) {
                     Menu.mainMenu(player);
                 } else {
-                    if (humanCount == 0) {
+                    if (humanCount == 0 || debug) {
                         player.showHand();
 //                        try {
-//                            Thread.sleep(1000);
+//                            Thread.sleep(100);
 //                        } catch (InterruptedException e) {
 //                            e.printStackTrace();
 //                        }
@@ -49,9 +80,6 @@ public class Table {
     public static boolean winnerCheck() {
         for (Player player : players) {
             if (player.hand.isEmpty()) {
-                winnerAndPointsPerRound.put(player,pointsForWinner());
-                System.out.println(player.playerName + " is the Winner of this Round!");
-                System.out.println("They earned " + pointsForWinner() + " points!");
                 return true;
             }
         }
