@@ -26,6 +26,10 @@ public class CheckInput {
             String command = inputArray[1];
             switch (command.toUpperCase()) {
                 case "UNO":
+                    if (currentPlayer.getHand().size() != 2) {
+                        System.out.println("You can only declare UNO when you have exactly 2 cards.");
+                        return false;
+                    }
                     System.out.println(currentPlayer.playerName +": UNO!");
                     currentPlayer.declareUNO();
                     break;
