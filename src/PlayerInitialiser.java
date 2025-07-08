@@ -36,7 +36,7 @@ public class PlayerInitialiser {
                 }
             } else {
                 System.out.print("Invalid input. Please enter a number between 0 and the amount of players: ");
-                scanner.next(); // clear buffer
+                scanner.nextLine(); // clear buffer
             }
         }
 
