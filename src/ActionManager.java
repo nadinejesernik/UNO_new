@@ -29,7 +29,7 @@ public class ActionManager {
     }
 
     public static void advanceTurn() {
-        int step = isClockwise ? 1 : -1;
+        int step = isClockwise ? 1 : -1; //depending on isClockwise, turn is either advanced forward or backwards
         currentIndex = (currentIndex + step + players.size()) % players.size();
     }
 
