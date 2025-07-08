@@ -10,7 +10,7 @@ public class CardDeck {
     }
 
     public static ArrayList<Card> createHand() {
-        final int handSize = 7;
+        final int handSize = 3;
         ArrayList<Card> hand = new ArrayList<>();
         for (int i = 0; i < handSize; i++) {
             hand.add(currentDeck.getFirst());

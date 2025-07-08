@@ -34,6 +34,21 @@ public class CompPlayer extends Player {
             return;
         }
 
+        if (hand.size() == 2) {
+            if (rand.nextBoolean()) {
+                System.out.println(playerName +" said UNO!");
+                declareUNO();
+            }
+        }
+
+        if (hand.size() == 1 && !hasDeclaredUNO()) {
+            PunishmentManager.noUNOCalled(this);
+        }
+
+        if (hand.size() > 2) {
+            resetUNODeclaration();
+        }
+
 
         while (true) {
 
@@ -65,7 +80,9 @@ public class CompPlayer extends Player {
                     System.out.println(getPlayerName() + " made a mistake. Played invalid card. Drawing instead.");
                     Card drawn = CardDeck.drawCard();
                     hand.add(drawn);
-                    System.out.println(getPlayerName() + " drew: " + drawn); //only to show if it works
+                    if (Table.debug) {
+                        System.out.println(getPlayerName() + " drew: " + drawn);
+                    } //only to show if it works
                     break;
                 }
 
