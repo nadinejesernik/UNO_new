@@ -68,7 +68,8 @@ public class Table {
                     player.points += pointsForWinner();
                     System.out.println(player.playerName + " has " + player.points + " total points!");
 
-                    DBManager.saveScoresForRound(1, currentRound, players); //GameID 1 since we only have 1 game
+                    int gameId = DBManager.getGameId();
+                    DBManager.saveScoresForRound(gameId, currentRound, players);
                     currentRound++;
 
 
