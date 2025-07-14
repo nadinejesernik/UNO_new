@@ -108,7 +108,10 @@ public class CompPlayer extends Player {
                 System.out.println(getPlayerName() + " had no valid cards. Drawing...");
                 Card drawn = CardDeck.drawCard();
                 hand.add(drawn);
-                System.out.println(getPlayerName() + " drew: " + drawn); //only to show if it works
+
+                if (Table.debug) {
+                    System.out.println(getPlayerName() + " drew: " + drawn); //only to show if it works
+                }
 
                 if (CardValidity.isValidCard(drawn)) {
                     if (drawn instanceof ActionCard) {
