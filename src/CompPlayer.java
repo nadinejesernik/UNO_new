@@ -74,8 +74,14 @@ public class CompPlayer extends Player {
                 if (CardValidity.isValidCard(chosenCard)) {
 
                     if (chosenCard instanceof ActionCard ac && ac.getAction() == ActionCard.Action.DRAW_FOUR) {
-                        ActionManager.setDrawFourHandSnapshot(new ArrayList<>(getHand()));
+                        if (!CardDeck.wasJustDrawn(ac)) {
+                            List<Card> snapshot = new ArrayList<>(getHand());
+                            snapshot.remove(ac); // remove the Draw Four itself
+                            ActionManager.setDrawFourHandSnapshot(snapshot);
+                            ActionManager.setDrawFourTopCard(DiscardPile.showTopCard());
+                        }
                     }
+
 
                     if (chosenCard instanceof ActionCard) {
                         ((ActionCard) chosenCard).playAction();

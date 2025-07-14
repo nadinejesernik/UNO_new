@@ -3,6 +3,7 @@ import java.util.Collections;
 
 public class CardDeck {
     private static ArrayList<Card> currentDeck = new ArrayList<>();
+    private static Card lastDrawnCard = null;
 
     public static void buildFreshDeck() {
         currentDeck = DeckInitializer.initializeDeck();
@@ -30,7 +31,12 @@ public class CardDeck {
         if (drawn.getColour() == Card.Colour.WILD) {
             drawn.wildColor = null;
         }
+        lastDrawnCard = drawn; // Track the most recently drawn card
         return drawn;
+    }
+
+    public static boolean wasJustDrawn(Card card) {
+        return lastDrawnCard == card;
     }
 
     public static void reshuffleDeck(ArrayList<Card> discardPile) {

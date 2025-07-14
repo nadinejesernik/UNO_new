@@ -54,7 +54,10 @@ public class HumanPlayer extends Player {
         if (CardValidity.isValidCard(cardToPlay)) {
 
             if (cardToPlay instanceof ActionCard ac && ac.getAction() == ActionCard.Action.DRAW_FOUR) {
-                ActionManager.setDrawFourHandSnapshot(new ArrayList<>(getHand()));
+                List<Card> snapshot = new ArrayList<>(getHand());
+                snapshot.remove(ac); // Remove the Draw Four card itself
+                ActionManager.setDrawFourHandSnapshot(snapshot);
+                ActionManager.setDrawFourTopCard(DiscardPile.showTopCard());
             }
 
 

@@ -5,7 +5,7 @@ public class Table {
     static int humanCount;
     //    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<>();
     static ArrayList<Player> winnerPerRound = new ArrayList<>();
-    static boolean debug = true;
+    static boolean debug = false;
     static boolean playing = true;
     public static int currentRound = 1; //for db use
 
