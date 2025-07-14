@@ -120,6 +120,20 @@ public class CompPlayer extends Player {
                     hand.remove(drawn);
                     DiscardPile.cardPlayed(drawn);
                     System.out.println(getPlayerName() + " played the drawn card: " + drawn);
+
+                    // COM ruft evtl. automatisch UNO, wenn er nur noch 1 Karte hat
+                    if (hand.size() == 1) {
+                        if (rand.nextInt(10) < attention) { // Random Chance, UNO zu sagen
+                            declareUNO();
+                            System.out.println(getPlayerName() + " said UNO!");
+                        } else {
+                            // Kein UNO gesagt → Strafe
+                            PunishmentManager.noUNOCalled(this);
+                        }
+                    }
+
+                    // Sicherheitshalber UNO zurücksetzen
+                    resetUNODeclaration();
                     break;
                 }
 

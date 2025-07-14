@@ -101,29 +101,68 @@ public class HumanPlayer extends Player {
             if (CardValidity.isValidCard(drawn)) {
                 Scanner scanner = new Scanner(System.in);
                 String input;
+                boolean playCard = false;
+                // Merkt sich, ob der Spieler in diesem Moment „UNO“ gerufen hat
+                boolean unoCalled = false;
 
                 while (true) {
-                    System.out.print("The drawn card is valid. Do you want to play it? (Yes/No): ");
+                    //Eingabe ob Spieler Karte spielen möchte
+                    System.out.print("The drawn card is valid. Do you want to play it? (Yes / Yes UNO / No): ");
                     input = scanner.nextLine().trim().toLowerCase();
 
-                    if (input.equals("yes")) {
-                        hand.remove(drawn);
-                        DiscardPile.cardPlayed(drawn);
-                        System.out.println(getPlayerName() + " played: " + drawn);
-                        System.out.println("_____________");
+                    // Eingabe in einzelne Wörter
+                    String[] parts = input.split("\\s+");
+                    if (parts.length >= 1) {
+                        // Spieler möchte die gezogene Karte spielen
+                        if (parts[0].equals("yes")) {
+                            playCard = true;
 
-                        if (drawn instanceof ActionCard) {
-                            ((ActionCard) drawn).playAction();
+                            // Spieler hat zusätzlich "uno" angegeben
+                            if (parts.length == 2 && parts[1].equals("uno")) {
+                                if (hand.size() == 2) {
+                                    // UNO wird akzeptiert
+                                    declareUNO();
+                                    unoCalled = true;
+                                    System.out.println(getPlayerName() + ": UNO!");
+                                } else {
+                                    // Ungültiger UNO-Ruf (nicht genau 2 Karten)
+                                    System.out.println("You can only declare UNO when you have exactly 2 cards.");
+                                    //Eingabe wird erneut abgefragt
+                                    continue;
+                                }
+                            }
+
+                            // Die gezogene Karte wird gespielt
+                            hand.remove(drawn);
+                            DiscardPile.cardPlayed(drawn);
+                            System.out.println(getPlayerName() + " played: " + drawn);
+                            System.out.println("_____________");
+
+                            // Falls es eine Aktionskarte ist, deren Effekt ausführen
+                            if (drawn instanceof ActionCard) {
+                                ((ActionCard) drawn).playAction();
+                            }
+
+                            // Falls Spieler jetzt nur noch 1 Karte hat, aber UNO nicht gesagt hat → Strafe
+                            if (hand.size() == 1 && !unoCalled) {
+                                PunishmentManager.noUNOCalled(this);
+                            }
+                            // UNO-Status zurückgesetzt
+                            resetUNODeclaration();
+                            // Spielzug ist beendet
+                            return true;
+
+                            // Spieler möchte die gezogene Karte nicht spielen
+                        } else if (parts[0].equals("no")) {
+                            System.out.println("Card not played. Turn ends.");
+                            System.out.println("_____________");
+                            return true;
                         }
-                        return true;
-                    } else if (input.equals("no")) {
-                        System.out.println("Card not played. Turn ends.");
-                        System.out.println("_____________");
-                        return true;
-                    } else {
-                        System.out.println("Invalid input. Please enter 'yes' or 'no'.");
                     }
+
+                    System.out.println("Invalid input. Please enter 'yes', 'yes uno' or 'no'.");
                 }
+
 
             } else {
                 System.out.println("The drawn card is not valid. Turn ends.");
