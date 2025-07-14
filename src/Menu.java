@@ -75,17 +75,15 @@ public class Menu {
     }
     static void exitGame() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Do you wanna Save & Exit(1) or Exit(2)?");
+        System.out.println("Are you sure you want to end the game? Yes(1) or No(2)?");
         int endAuswahl = scanner.nextInt();
         switch (endAuswahl){
             case 1:
-                System.out.println("You saved your Game Progress!");
-                //hier ist das in die Datenbank speichern
                 System.out.println("See you next time!");
                 System.exit(0);
             case 2:
-                System.out.println("See you next time!");
-                System.exit(0);
+                System.out.println("Back to the menu!");
+                mainMenu(currentPlayer);
         }
     }
 
