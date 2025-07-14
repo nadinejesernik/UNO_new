@@ -1,12 +1,15 @@
 import java.util.*;
 
 public class Table {
-    static Player[] players;
+    static ArrayList<Player> players = new ArrayList<>();
     static int humanCount;
 //    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<>();
     static ArrayList<Player> winnerPerRound = new ArrayList<>();
     static boolean debug = true;
     static boolean playing = true;
+    public static int currentRound = 1; //for db use
+
+
     public static void GameInitialisation() {
         players = PlayerInitialiser.initializePlayers();
         PlayerInitialiser.showPlayers(players);
@@ -41,6 +44,11 @@ public class Table {
     public static void GamePlay() {
         while(!winnerCheck()) {
             for (Player player : players) {
+
+                if (player != ActionManager.getCurrentPlayer()) {
+                    continue; // skip until we reach the current one
+                }
+
                 System.out.println("The card on top of the deck is: " + DiscardPile.showTopCard()); //Karte wird hier angezeigt egal ob Mensch oder Bot
 
                 if (player instanceof HumanPlayer) {
@@ -60,6 +68,11 @@ public class Table {
                     player.points += pointsForWinner();
                     System.out.println(player.playerName + " has " + player.points + " total points!");
 
+                    int gameId = DBManager.getGameId();
+                    DBManager.saveScoresForRound(gameId, currentRound, players);
+                    currentRound++;
+
+
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -75,8 +88,11 @@ public class Table {
                     }
                     break;
                 }
-            }
 
+                ActionManager.advanceTurn();
+
+                break;
+            }
         }
     }
 

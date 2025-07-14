@@ -30,7 +30,8 @@ public class CompPlayer extends Player {
 
         if(ActionManager.isSkipped()) {
             ActionManager.setSkipped(false);
-            System.out.println("Your turn has been skipped.");
+            System.out.println(getPlayerName() + "'s turn has been skipped.");
+            System.out.println("_____________");
             return;
         }
 

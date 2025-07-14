@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Menu {
@@ -7,9 +8,10 @@ public class Menu {
 
         System.out.println("it's " + currentPlayer.playerName + "'s turn");
         System.out.println("Choose an option:");
-        System.out.println("1.Play");
-        System.out.println("2.Help");
-        System.out.println("3.Exit");
+        System.out.println("1. Play");
+        System.out.println("2. Help");
+        System.out.println("3. View Scores");
+        System.out.println("4. Exit");
         Scanner scanner = new Scanner(System.in);
         String menuAuswahl = scanner.next();
         switch (menuAuswahl) {
@@ -20,6 +22,9 @@ public class Menu {
                 help();
                 break;
             case "3":
+                viewScores(); // ✅ Add this
+                break;
+            case "4":
                 exitGame();
                 break;
             default:
@@ -27,6 +32,7 @@ public class Menu {
                 mainMenu(currentPlayer);
                 break;
         }
+
     }
 
     static void help() {
@@ -82,4 +88,35 @@ public class Menu {
                 System.exit(0);
         }
     }
+
+    public static void viewScores() {
+        int gameId = DBManager.getGameId();
+
+        String query = "SELECT PlayerName, SUM(Score) as TotalScore " +
+                "FROM Scores WHERE GameID = " + gameId + " " +
+                "GROUP BY PlayerName ORDER BY TotalScore DESC";
+
+        try {
+            var results = DBManager.getDb().executeQuery(query);
+
+            if (results.isEmpty()) {
+                System.out.println("No scores found for Game ID: " + gameId);
+                System.out.println(" ");
+            } else {
+                System.out.println("|| Total Scores for Game " + gameId + " ||");
+                for (var row : results) {
+                    System.out.println(row.get("PlayerName") + ": " + row.get("TotalScore") + " points");
+                }
+                System.out.println(" ");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error retrieving scores: " + e.getMessage());
+        }
+
+        mainMenu(currentPlayer);
+    }
+
+
+
 }
