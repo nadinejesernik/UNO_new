@@ -12,7 +12,9 @@ public class CompPlayer extends Player {
     public CompPlayer(String name) {
         super(name);
         attention = rand.nextInt(5, 11); //Put attention between 5 (distracted) and 10 (focused) to determine how likely COM is to put a wrong card
-        patience = rand.nextInt(1, 11); //Put patience between 1 (impatient) an 10 (patient) to determine how likely COM is to accuse someone of cheating
+        int[] weighted = {1, 1, 2, 2, 3, 3, 4, 5, 6, 7, 8, 9, 10}; // lower numbers occur more often
+        patience = weighted[rand.nextInt(weighted.length)]; //set patience with 1 low patience (will accuse more often) to 10
+
     }
 
     @Override
@@ -70,6 +72,11 @@ public class CompPlayer extends Player {
                 }
 
                 if (CardValidity.isValidCard(chosenCard)) {
+
+                    if (chosenCard instanceof ActionCard ac && ac.getAction() == ActionCard.Action.DRAW_FOUR) {
+                        ActionManager.setDrawFourHandSnapshot(new ArrayList<>(getHand()));
+                    }
+
                     if (chosenCard instanceof ActionCard) {
                         ((ActionCard) chosenCard).playAction();
                     }
@@ -126,5 +133,13 @@ public class CompPlayer extends Player {
         if (attention < 5 || attention > 10) {
             throw new IllegalArgumentException("Attention must be between 5 and 10"); //to make sure value can't be mistakenly set to below 5 or above 10
         }
+    }
+
+    public int getPatience() {
+        return patience;
+    }
+
+    public void setPatience(int patience) {
+        this.patience = patience;
     }
 }

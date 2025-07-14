@@ -56,14 +56,32 @@ public class Table {
 
                 System.out.println("The card on top of the deck is: " + DiscardPile.showTopCard()); //Karte wird hier angezeigt egal ob Mensch oder Bot
 
-                if (player instanceof HumanPlayer) {
-                    Menu.mainMenu(player);
-                } else {
-                    if (humanCount == 0) {
-                        player.showHand();
+                if (ActionManager.isDraw() && DiscardPile.showTopCard() instanceof ActionCard &&
+                        ((ActionCard) DiscardPile.showTopCard()).getAction() == ActionCard.Action.DRAW_FOUR) {
+
+                    Player instigator = ActionManager.getDrawFourInstigator();
+
+                    if (player instanceof HumanPlayer) {
+                        DrawFourMenu.drawMenu(player, instigator);
+                    } else {
+                        player.playCard();  // COM will handle accuse internally
                     }
-                    player.playCard();
+
+                    // Reset flags
+                    ActionManager.setDraw(false);
+                    ActionManager.clearDrawFourInstigator();
+                } else {
+                    if (player instanceof HumanPlayer) {
+                        Menu.mainMenu(player);
+                    } else {
+                        if (humanCount == 0) {
+                            player.showHand();
+                        }
+                        player.playCard();
+                    }
                 }
+
+
 
                 if (winnerCheck()) {
                     winnerPerRound.add(player);

@@ -9,6 +9,8 @@ public class ActionManager {
     private static ArrayList<Player> players;
     private static boolean isClockwise = true;
     private static int currentIndex = 0;
+    private static Player drawFourInstigator = null;
+    private static List<Card> drawFourHandSnapshot = new ArrayList<>();
 
 
     public static void setCurrentPlayer(Player player) {
@@ -42,32 +44,26 @@ public class ActionManager {
     }
 
     public static void drawFourCheck(Player player) {
-        List<Card> hand = player.getHand();
+        List<Card> handBeforeDrawFour = getDrawFourHandSnapshot();
         List<Card> validCards = new ArrayList<>();
 
-        for (Card c : hand) {
-            // Skip any Draw Four cards
-            if (c instanceof ActionCard ac) {
-                if (ac.getAction() == ActionCard.Action.DRAW_FOUR) {
-                    continue;
-                }
+        for (Card c : handBeforeDrawFour) {
+            if (c instanceof ActionCard ac && ac.getAction() == ActionCard.Action.DRAW_FOUR) {
+                continue; // skip other Draw Four cards
             }
 
-            // Check if card is valid and add to validCards array
             if (CardValidity.isValidCard(c)) {
                 validCards.add(c);
             }
-
-            if (!validCards.isEmpty()) {
-                player.setCheater(true); //set Cheater to true if there are valid cards in the array
-            }
-
         }
 
-        if (player.isCheater()) {
-            System.out.println(player.getPlayerName() + " is cheating! They played Draw Four with other valid cards."); //just to show if it works
+        if (!validCards.isEmpty()) {
+            player.setCheater(true);
         }
+
+        clearDrawFourHandSnapshot(); // Clean up after check
     }
+
 
     public static void drawFour(Player player) {
 
@@ -145,4 +141,30 @@ public class ActionManager {
     public static void setIsClockwise(boolean isClockwise) {
         ActionManager.isClockwise = isClockwise;
     }
+
+    public static void setDrawFourInstigator(Player player) {
+        drawFourInstigator = player;
+    }
+
+    public static Player getDrawFourInstigator() {
+        return drawFourInstigator;
+    }
+
+    public static void clearDrawFourInstigator() {
+        drawFourInstigator = null;
+    }
+
+    public static void setDrawFourHandSnapshot(List<Card> hand) {
+        drawFourHandSnapshot = new ArrayList<>(hand); // make a copy
+    }
+
+    public static List<Card> getDrawFourHandSnapshot() {
+        return drawFourHandSnapshot;
+    }
+
+    public static void clearDrawFourHandSnapshot() {
+        drawFourHandSnapshot.clear();
+    }
+
+
 }

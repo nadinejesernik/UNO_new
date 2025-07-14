@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class ActionCard extends Card {
     public enum Action {
         SKIP,
@@ -33,10 +35,12 @@ public class ActionCard extends Card {
                 super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());
                 break;
             case Action.DRAW_FOUR:
+                ActionManager.setDrawFourHandSnapshot(new ArrayList<>(ActionManager.getCurrentPlayer().getHand()));
                 ActionManager.setDraw(true);
-                ActionManager.drawFourCheck(ActionManager.getCurrentPlayer());
+                ActionManager.setDrawFourInstigator(ActionManager.getCurrentPlayer());
                 super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());
                 break;
+
         }
     }
 

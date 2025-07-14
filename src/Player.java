@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Player {
     protected String playerName;
@@ -47,11 +48,41 @@ public abstract class Player {
                 return true;
             }
 
-            else if(action == ActionCard.Action.DRAW_FOUR){
-                ActionManager.drawFour(this);
+            else if (action == ActionCard.Action.DRAW_FOUR) {
+                Player instigator = ActionManager.getDrawFourInstigator();
+
+                // If it's a HumanPlayer, show the challenge menu
+                if (this instanceof HumanPlayer) {
+                    DrawFourMenu.drawMenu(this, instigator);
+                }
+
+                // If COM, determine whether to accuse based on patience
+                else if (this instanceof CompPlayer comp) {
+                    // Lower patience = more likely to accuse
+                    int roll = new Random().nextInt(1, 11); // 1 to 10
+                    System.out.println(getPlayerName() + " (Patience: " + comp.getPatience() + ", Roll: " + roll + ")");
+
+                    if (roll >= comp.getPatience())  {
+                        // Will accuse
+                        System.out.println(comp.getPlayerName() + " is accusing " + instigator.getPlayerName() + " of cheating!");
+                        ActionManager.drawFourCheck(instigator);
+                        if (instigator.isCheater()) {
+                            PunishmentManager.plusFour(2, this, instigator);
+                            instigator.setCheater(false);
+                        } else {
+                            PunishmentManager.plusFour(3, this, instigator);
+                        }
+                    } else {
+                        // Will not accuse
+                        PunishmentManager.plusFour(1, this, instigator);
+                    }
+                }
+
+
                 ActionManager.setDraw(false);
                 return true;
             }
+
         }
         return false;
     }

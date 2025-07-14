@@ -52,6 +52,12 @@ public class HumanPlayer extends Player {
         Card cardToPlay = hand.get(cardIndex - 1);
 
         if (CardValidity.isValidCard(cardToPlay)) {
+
+            if (cardToPlay instanceof ActionCard ac && ac.getAction() == ActionCard.Action.DRAW_FOUR) {
+                ActionManager.setDrawFourHandSnapshot(new ArrayList<>(getHand()));
+            }
+
+
             if (cardToPlay instanceof ActionCard) {
                 ((ActionCard) cardToPlay).playAction();
             }
