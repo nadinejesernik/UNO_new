@@ -3,7 +3,7 @@ import java.util.*;
 public class Table {
     static ArrayList<Player> players = new ArrayList<>();
     static int humanCount;
-//    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<>();
+    //    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<>();
     static ArrayList<Player> winnerPerRound = new ArrayList<>();
     static boolean debug = true;
     static boolean playing = true;
@@ -32,6 +32,11 @@ public class Table {
 
     public static void setupNewRound() {
         System.out.println("_____ Setting up new Round _____");
+
+        ActionManager.setSkipped(false);
+        ActionManager.setDraw(false);
+        ActionManager.setIsClockwise(true); //if last card played in last round was action card, effects don't get carried into new round
+
         CardDeck.clearDeck();
         DiscardPile.clearDiscardPile();
         for (Player player : players) {
@@ -42,7 +47,7 @@ public class Table {
     }
 
     public static void GamePlay() {
-        while(!winnerCheck()) {
+        while (!winnerCheck()) {
             for (Player player : players) {
 
                 if (player != ActionManager.getCurrentPlayer()) {

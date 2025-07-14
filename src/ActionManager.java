@@ -138,4 +138,11 @@ public class ActionManager {
         isSkipped = skipped;
     }
 
+    public static boolean isIsClockwise() {
+        return isClockwise;
+    }
+
+    public static void setIsClockwise(boolean isClockwise) {
+        ActionManager.isClockwise = isClockwise;
+    }
 }
