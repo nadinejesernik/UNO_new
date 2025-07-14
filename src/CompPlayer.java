@@ -82,7 +82,10 @@ public class CompPlayer extends Player {
                     }
                     hand.remove(chosenCard);
                     DiscardPile.cardPlayed(chosenCard);
-                    System.out.println(getPlayerName() + " played: " + chosenCard + " (Attention: " + attention + ")"); //sout so human Players know what is happening
+                    System.out.println(getPlayerName() + " played: " + chosenCard); //sout so human Players know what is happening
+                    if (Table.debug) {
+                        System.out.println(" (Attention: " + attention + ")");
+                    } //only show for debug purposes
                     break;
                 } else {
                     System.out.println(getPlayerName() + " made a mistake. Played invalid card. Drawing instead.");

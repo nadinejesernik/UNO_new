@@ -32,23 +32,21 @@ public abstract class Player {
 
     public abstract void playCard(); //to be implemented by subclasses
 
-    public boolean checkForDraw(){
+    public boolean checkForDraw() {
 
-        if(!ActionManager.isDraw()){
+        if (!ActionManager.isDraw()) {
             return false;
         }
 
         Card topCard = DiscardPile.showTopCard();
-        if(topCard instanceof ActionCard){
+        if (topCard instanceof ActionCard) {
             ActionCard.Action action = ((ActionCard) topCard).getAction();
 
-            if (action == ActionCard.Action.DRAW_TWO){
+            if (action == ActionCard.Action.DRAW_TWO) {
                 ActionManager.drawTwo(this);
                 ActionManager.setDraw(false);
                 return true;
-            }
-
-            else if (action == ActionCard.Action.DRAW_FOUR) {
+            } else if (action == ActionCard.Action.DRAW_FOUR) {
                 Player instigator = ActionManager.getDrawFourInstigator();
 
                 // If it's a HumanPlayer, show the challenge menu
@@ -60,9 +58,11 @@ public abstract class Player {
                 else if (this instanceof CompPlayer comp) {
                     // Lower patience = more likely to accuse
                     int roll = new Random().nextInt(1, 11); // 1 to 10
-                    System.out.println(getPlayerName() + " (Patience: " + comp.getPatience() + ", Roll: " + roll + ")");
+                    if (Table.debug) {
+                        System.out.println(getPlayerName() + " (Patience: " + comp.getPatience() + ", Roll: " + roll + ")");
+                    }
 
-                    if (roll >= comp.getPatience())  {
+                    if (roll >= comp.getPatience()) {
                         // Will accuse
                         System.out.println(comp.getPlayerName() + " is accusing " + instigator.getPlayerName() + " of cheating!");
                         ActionManager.drawFourCheck(instigator);
@@ -89,7 +89,7 @@ public abstract class Player {
 
     public void showHand() {
         for (Card card : this.hand) {
-            System.out.print("|"+ (hand.indexOf(card)+1) +"| " + card + " ");
+            System.out.print("|" + (hand.indexOf(card) + 1) + "| " + card + " ");
         }
         System.out.println();
     }
