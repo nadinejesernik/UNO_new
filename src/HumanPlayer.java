@@ -11,7 +11,7 @@ public class HumanPlayer extends Player {
     public void playCard() {
         Scanner input = new Scanner(System.in);
         String inputString;
-        ActionManager.setCurrentPlayer(this); //to tell ActionManager which Player to reference
+        ActionManager.setCurrentPlayer(this); //um ActionManager zu sagen welcher Player referenziert wird
 
         if (Cheater) {
             Cheater = false;
@@ -28,7 +28,7 @@ public class HumanPlayer extends Player {
             return;
         }
 
-        showHand(); //zeit die Hand nur wenn Spieler nicht übersprungen wurde
+        showHand(); //zeigt die Hand nur wenn Spieler nicht übersprungen wurde
 
         while (true) {
             if (checkAndDrawIfNoValidCards()) {
@@ -53,7 +53,7 @@ public class HumanPlayer extends Player {
 
             if (cardToPlay instanceof ActionCard ac && ac.getAction() == ActionCard.Action.DRAW_FOUR) {
                 List<Card> snapshot = new ArrayList<>(getHand());
-                snapshot.remove(ac); // Remove the Draw Four card itself
+                snapshot.remove(ac); // Entferne DrawFour Karte
                 ActionManager.setDrawFourHandSnapshot(snapshot);
                 ActionManager.setDrawFourTopCard(DiscardPile.showTopCard());
             }
@@ -161,11 +161,11 @@ public class HumanPlayer extends Player {
             } else {
                 System.out.println("The drawn card is not valid. Turn ends.");
                 System.out.println("_____________");
-                return true; // turn ends
+                return true;
             }
         }
 
-        return false; // valid cards exist, proceed normally
+        return false;
     }
 
 

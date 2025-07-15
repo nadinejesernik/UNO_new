@@ -23,7 +23,7 @@ public class ActionCard extends Card {
     public void playAction() {
         switch (action) {
             case Action.SKIP:
-                ActionManager.skipNextPlayer(); //sets isSkipped to true to be checked in playCard method
+                ActionManager.skipNextPlayer(); //setzt isSkipped auf true -> Wird in playCard() abgefragt
                 break;
             case Action.REVERSE:
                 ActionManager.reverseOrder();
@@ -35,7 +35,7 @@ public class ActionCard extends Card {
                 super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());
                 break;
             case Action.DRAW_FOUR:
-                ActionManager.setDrawFourHandSnapshot(new ArrayList<>(ActionManager.getCurrentPlayer().getHand()));
+                ActionManager.setDrawFourHandSnapshot(new ArrayList<>(ActionManager.getCurrentPlayer().getHand())); //speichert Liste von gültigen Karten bevor DrawFour gelegt wird
                 ActionManager.setDraw(true);
                 ActionManager.setDrawFourInstigator(ActionManager.getCurrentPlayer());
                 super.wildColor = ActionManager.chooseColour(ActionManager.getCurrentPlayer());

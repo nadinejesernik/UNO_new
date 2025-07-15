@@ -11,7 +11,7 @@ public class ActionManager {
     private static int currentIndex = 0;
     private static Player drawFourInstigator = null;
     private static List<Card> drawFourHandSnapshot = new ArrayList<>();
-    private static Card drawFourTopCard = null; // New field to store the top card before DRAW_FOUR
+    private static Card drawFourTopCard = null; // Um die Top Card vor DrawFour Card zu speichern
 
     public static void setCurrentPlayer(Player player) {
         currentPlayer = player;
@@ -48,12 +48,12 @@ public class ActionManager {
 
         if (CardDeck.wasJustDrawn(DiscardPile.showTopCard())) {
             clearDrawFourHandSnapshot();
-            return; // Cannot be cheating if Draw Four was just drawn
+            return; // Wenn DrawFour Karte gerade erst gezogen wurde kann es kein schummeln sein sie zu legen
         }
 
         for (Card c : handBeforeDrawFour) {
             if (c instanceof ActionCard ac && ac.getAction() == ActionCard.Action.DRAW_FOUR) {
-                continue; // skip other Draw Fours
+                continue; // andere DrawFour Karten werden nicht beachtet
             }
 
             if (CardValidity.isValidCardAgainst(c, topCardAtDrawFour)) {
@@ -62,17 +62,7 @@ public class ActionManager {
             }
         }
 
-        clearDrawFourHandSnapshot(); // Clean up
-    }
-
-
-
-    public static void drawFour(Player player) {
-        System.out.println(player.getPlayerName() + " must draw 4 cards! Your turn is skipped.");
-        System.out.println("_____________");
-        for (int i = 0; i < 4; i++) {
-            player.PlayerDrawsCard();
-        }
+        clearDrawFourHandSnapshot(); // Liste wird zurückgesetzt
     }
 
     public static Card.Colour chooseColour(Player player) {
@@ -93,7 +83,7 @@ public class ActionManager {
                     System.out.println("Invalid input. Try again:");
                 }
             }
-        } else {
+        } else { //COM Player Logik
             List<Card.Colour> coloursInHand = new ArrayList<>();
             for (Card card : player.getHand()) {
                 Card.Colour colour = card.getColour();
@@ -103,7 +93,7 @@ public class ActionManager {
             }
 
             if (coloursInHand.isEmpty()) {
-                return Card.Colour.RED;
+                return Card.Colour.RED; //Hardcoded Auswahl falls COM keine Farbkarten auf der Hand hat (sollte nicht oft vorkommen)
             }
 
             Random rand = new Random();
@@ -129,10 +119,6 @@ public class ActionManager {
 
     public static void setSkipped(boolean skipped) {
         isSkipped = skipped;
-    }
-
-    public static boolean isIsClockwise() {
-        return isClockwise;
     }
 
     public static void setIsClockwise(boolean isClockwise) {

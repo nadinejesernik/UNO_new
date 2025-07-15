@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class CompPlayer extends Player {
 
-    private int attention; //to determine if COM will make a mistake when putting card down
-    private int patience; //to determine if COM accuses someone of cheating when putting down a Draw 4
+    private int attention; //um festzulegen wie wahrscheinlich COM einen Fehler macht
+    private int patience; //um festzulegen wie wahrscheinlich COM des Schummelns beschuldigt
     private final Random rand = new Random();
 
     public CompPlayer(String name) {
@@ -149,23 +149,7 @@ public class CompPlayer extends Player {
     }
 
 
-    public int getAttention() {
-        return attention;
-    }
-
-    public void setAttention(int attention) {
-        this.attention = attention;
-
-        if (attention < 5 || attention > 10) {
-            throw new IllegalArgumentException("Attention must be between 5 and 10"); //to make sure value can't be mistakenly set to below 5 or above 10
-        }
-    }
-
     public int getPatience() {
         return patience;
-    }
-
-    public void setPatience(int patience) {
-        this.patience = patience;
     }
 }

@@ -20,17 +20,15 @@ public abstract class Player {
         saidUNO = false;
     }
 
-
     public Player(String playerName) {
         this.playerName = playerName;
-//        hand = CardDeck.createHand();
     }
 
     public void PlayerDrawsCard() {
-        hand.add(CardDeck.drawCard()); //communicates with Clarissa's card deck drawCard method
+        hand.add(CardDeck.drawCard());
     }
 
-    public abstract void playCard(); //to be implemented by subclasses
+    public abstract void playCard();
 
     public boolean checkForDraw() {
 
@@ -49,21 +47,21 @@ public abstract class Player {
             } else if (action == ActionCard.Action.DRAW_FOUR) {
                 Player instigator = ActionManager.getDrawFourInstigator();
 
-                // If it's a HumanPlayer, show the challenge menu
+                // Wenn HumanPlayer dann wird das DrawFour Menü angezeigt
                 if (this instanceof HumanPlayer) {
                     DrawFourMenu.drawMenu(this, instigator);
                 }
 
-                // If COM, determine whether to accuse based on patience
+                // Wenn COM nutze Patience meter um festzustellen ob COM beschuldigt oder nicht
                 else if (this instanceof CompPlayer comp) {
-                    // Lower patience = more likely to accuse
-                    int roll = new Random().nextInt(1, 11); // 1 to 10
+                    // Niedriger Patience Wert -> Beschuldigt öfter
+                    int roll = new Random().nextInt(1, 11);
                     if (Table.debug) {
                         System.out.println(getPlayerName() + " (Patience: " + comp.getPatience() + ", Roll: " + roll + ")");
                     }
 
                     if (roll >= comp.getPatience()) {
-                        // Will accuse
+                        // Wenn beschuldigt wird
                         System.out.println(comp.getPlayerName() + " is accusing " + instigator.getPlayerName() + " of cheating!");
                         ActionManager.drawFourCheck(instigator);
                         if (instigator.isCheater()) {
@@ -73,13 +71,12 @@ public abstract class Player {
                             PunishmentManager.plusFour(3, this, instigator);
                         }
                     } else {
-                        // Will not accuse
+                        // Wenn nicht beschuldigt wird
                         PunishmentManager.plusFour(1, this, instigator);
                     }
                 }
 
-
-                ActionManager.setDraw(false);
+                ActionManager.setDraw(false); //Flag zurücksetzen
                 return true;
             }
 
