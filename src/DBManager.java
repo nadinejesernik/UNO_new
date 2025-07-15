@@ -10,7 +10,7 @@ public class DBManager {
         try {
             db = new SqliteClient("uno_game.db");
 
-            if (!db.tableExists("Scores")) {
+            if (!db.tableExists("Scores")) { //Neue Table erstellen
                 db.executeStatement(
                         "CREATE TABLE Scores (" +
                                 "GameID INTEGER, " +
@@ -19,15 +19,15 @@ public class DBManager {
                                 "Score INTEGER)"
                 );
                 System.out.println("Database and Scores table created.");
-                gameId = 1;  // First ever game
-            } else {
+                gameId = 1;  // Das erste Spiel bekommt ID1
+            } else { //Wenn Table schon existiert
                 System.out.println("Database connected. Scores table exists.");
 
-                // Get the highest existing GameID
+                // Wähle die höchste GameID (das aktuellste Spiel) und speichere in results
                 var results = db.executeQuery("SELECT MAX(GameID) as MaxID FROM Scores;");
-                if (!results.isEmpty() && results.get(0).get("MaxID") != null) {
-                    gameId = Integer.parseInt(results.get(0).get("MaxID")) + 1;
-                } else {
+                if (!results.isEmpty() && results.get(0).get("MaxID") != null) { //Bedingung, dass Table nicht leer ist
+                    gameId = Integer.parseInt(results.get(0).get("MaxID")) + 1; //um GameID eines neuen Spieles immer um 1 zu erhöhen
+                } else { //Wenn Table zwar schon besteht aber noch keine Werte gespeichert hat
                     gameId = 1;
                 }
             }
@@ -40,7 +40,7 @@ public class DBManager {
 
     public static void saveScoresForRound(int gameId, int roundNo, ArrayList<Player> players) {
         try {
-            for (Player player : players) {
+            for (Player player : players) { //loopt durch Player Array
                 String sql = String.format(
                         "INSERT INTO Scores (GameID, RoundNo, PlayerName, Score) VALUES (%d, %d, '%s', %d);",
                         gameId, roundNo, player.getPlayerName(), player.points

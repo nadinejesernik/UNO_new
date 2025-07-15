@@ -1,9 +1,9 @@
 public class CardValidity {
-    public static boolean isValidCard(Card card) {
+    public static boolean isValidCard(Card card) { //Um zu prüfen ob die gespielte Karte gültig für die momentane TopCard ist
         return isValidCardAgainst(card, DiscardPile.showTopCard());
     }
 
-    public static boolean isValidCardAgainst(Card card, Card topCard) {
+    public static boolean isValidCardAgainst(Card card, Card topCard) { //Für DrawFour Logik. Um Karten mit der vorhergehenden TopCard abzugleichen
         if (card.getColour() == Card.Colour.WILD) {
             return true;
         }
