@@ -1,13 +1,15 @@
 public class UnoMain {
     public static void main(String[] args) {
-        DBManager.initialiseDB(); //initialise database
+        DBManager.initialiseDB(); //initialisiere Datenbank
 
         Table.GameInitialisation();
-        ActionManager.initializePlayers(Table.players); //to sync ActionManager with Table Player ArrayList
+        ActionManager.initializePlayers(Table.players); //synchronisiert ActionManager mit Player ArrayList in Table
 
-        while (Table.playing) {
+        while (Table.playing) { //Gameplay Loop
             Table.GamePlay();
-            Table.setupNewRound();
+            if (Table.playing) { //playing wird durch erreich von 500 Punkten eines Spielers auf false gesetzt
+                Table.setupNewRound();
+            }
         }
     }
 }

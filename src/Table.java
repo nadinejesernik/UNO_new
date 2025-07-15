@@ -3,16 +3,14 @@ import java.util.*;
 public class Table {
     static ArrayList<Player> players = new ArrayList<>();
     static int humanCount;
-    //    static HashMap<Player, Integer> winnerAndPointsPerRound = new HashMap<>();
-    static ArrayList<Player> winnerPerRound = new ArrayList<>();
-    static boolean debug = false;
-    static boolean playing = true;
-    public static int currentRound = 1; //for db use
+    static boolean debug = false; //für Debugausgaben
+    static boolean playing = true; //für Game-Loop
+    public static int currentRound = 1; //für Datenbank
 
 
     public static void GameInitialisation() {
         players = PlayerInitialiser.initializePlayers();
-        PlayerInitialiser.showPlayers(players);
+        PlayerInitialiser.showPlayers(players); //Ausgabe für Spielerübersicht
         players = PlayerInitialiser.chooseFirstPlayer(players);
 
         freshDeckAndHands();
@@ -21,8 +19,11 @@ public class Table {
     public static void freshDeckAndHands() {
         CardDeck.buildFreshDeck();
         do {
+            //Diese Funktion wird aufgerufen um die erste Karte niederzulegen
             DiscardPile.cardPlayed(CardDeck.drawCard());
+            //es wird solange wiederholt bis es keine Aktionskarte ist
         } while (DiscardPile.showTopCard() instanceof ActionCard);
+        //falls eine Aktionskarte gelegt wurde liegen mehrere Karten am DiscardPile als gewünscht; also mischt diese Funktion diese überschüssigen karten wieder ins Deck
         CardDeck.returnWrongCardsToDeck(DiscardPile.returnDiscardPile());
 
         for (Player player : players) {
@@ -33,18 +34,22 @@ public class Table {
     public static void setupNewRound() {
         System.out.println("_____ Setting up new Round _____");
 
+        //Aktionen Ausführen wird im ActionManager zurückgesetzt, damit man eine neue frische Runde starten kann
         ActionManager.setSkipped(false);
         ActionManager.setDraw(false);
-        ActionManager.setIsClockwise(true); //if last card played in last round was action card, effects don't get carried into new round
+        ActionManager.setIsClockwise(true);
 
+        //CardDeck, DiscardPile & Karten auf der Hand der Spieler werden entleert
         CardDeck.clearDeck();
         DiscardPile.clearDiscardPile();
         for (Player player : players) {
             player.hand.clear();
         }
 
+        //Alles wird neu aufgesetzt für neue Runde
         freshDeckAndHands();
     }
+
 
     public static void GamePlay() {
         while (!winnerCheck()) {
@@ -84,7 +89,6 @@ public class Table {
 
 
                 if (winnerCheck()) {
-                    winnerPerRound.add(player);
                     System.out.println(player.playerName + " is the Winner of this Round!");
                     System.out.println("They earned " + pointsForWinner() + " points!");
 
@@ -95,19 +99,11 @@ public class Table {
                     DBManager.saveScoresForRound(gameId, currentRound, players);
                     currentRound++;
 
-
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
                     if (player.points >= 500) {
                         playing = false;
                         System.out.println(player.playerName + " has reached over 500 Points!");
                         System.out.println("They are the winner of this Game!");
-
-                        System.exit(0);
+                        return;
                     }
                     break;
                 }
@@ -119,7 +115,7 @@ public class Table {
         }
     }
 
-    //placeholder Funktion um abzuchecken ob ein Spieler keine Karten mehr hat
+    //Checkt ab ob ein Spieler keine Karten mehr hat - was Ihn anhand Implementation der Regeln zum Gewinner macht
     public static boolean winnerCheck() {
         for (Player player : players) {
             if (player.hand.isEmpty()) {
@@ -132,7 +128,7 @@ public class Table {
     public static int pointsForWinner() {
         int sumOfPoints = 0;
         for (Player player : players) {
-            sumOfPoints += player.totalPointValueOfHand();
+            sumOfPoints += player.totalPointValueOfHand(); //zählt alle Kartenwerte in den Spielerhänden zusammen
         }
         return sumOfPoints;
     }

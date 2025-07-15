@@ -28,11 +28,9 @@ public class HumanPlayer extends Player {
             return;
         }
 
-        showHand(); //only show hand if turn isn't skipped
+        showHand(); //zeit die Hand nur wenn Spieler nicht übersprungen wurde
 
         while (true) {
-
-
             if (checkAndDrawIfNoValidCards()) {
                 return;
             }
@@ -41,9 +39,9 @@ public class HumanPlayer extends Player {
             inputString = input.nextLine();
 
             if (CheckInput.splitCheckInput(inputString, this)) {
-                break; // Valid input
+                break; // Wenn Eingabe = richtig, dann endet die unendliche Schleife
             }
-            // Invalid input -> re-prompt
+            // Sonst fragt er noch einmal nach neuer Eingabe
         }
 
         String[] inputArray = inputString.trim().split("\\s+");
@@ -72,8 +70,6 @@ public class HumanPlayer extends Player {
             resetUNODeclaration();
 
         } else {
-//            System.out.println("This card is not valid. You draw 1 card as punishment.");
-//            PlayerDrawsCard();
             PunishmentManager.invalidCard(this);
 
         }
@@ -101,7 +97,6 @@ public class HumanPlayer extends Player {
             if (CardValidity.isValidCard(drawn)) {
                 Scanner scanner = new Scanner(System.in);
                 String input;
-                boolean playCard = false;
                 // Merkt sich, ob der Spieler in diesem Moment „UNO“ gerufen hat
                 boolean unoCalled = false;
 
@@ -115,7 +110,6 @@ public class HumanPlayer extends Player {
                     if (parts.length >= 1) {
                         // Spieler möchte die gezogene Karte spielen
                         if (parts[0].equals("yes")) {
-                            playCard = true;
 
                             // Spieler hat zusätzlich "uno" angegeben
                             if (parts.length == 2 && parts[1].equals("uno")) {

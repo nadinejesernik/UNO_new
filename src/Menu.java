@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Menu {
     static Player currentPlayer;
-    static void mainMenu(Player player) { //momentaner Spieler als Parameter hinugefügt
+    static void mainMenu(Player player) {
         currentPlayer = player;
 
         System.out.println("it's " + currentPlayer.playerName + "'s turn");
@@ -22,7 +22,7 @@ public class Menu {
                 help();
                 break;
             case "3":
-                viewScores(); // ✅ Add this
+                viewScores();
                 break;
             case "4":
                 exitGame();
@@ -114,7 +114,4 @@ public class Menu {
 
         mainMenu(currentPlayer);
     }
-
-
-
 }
