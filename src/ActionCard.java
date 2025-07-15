@@ -57,7 +57,7 @@ public class ActionCard extends Card {
             case Colour.YELLOW:
                 return "\u001B[33m" + super.getColour() + " " + action + "\u001B[0m";
             case Colour.WILD:
-                if (this.wildColor != null) {
+                if (this.wildColor != null) { //färbt wildcards in ausgesuchte farbe ein
                     switch (this.wildColor) {
                         case Colour.GREEN:
                             return "\u001B[32m" + super.getColour() + " " + action + "\u001B[0m";

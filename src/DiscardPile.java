@@ -4,7 +4,7 @@ public class DiscardPile {
     private static ArrayList<Card> discardPile = new ArrayList<>();
 
     public static void cardPlayed(Card card) {
-        discardPile.add(card); // -- mit player funktion des kartenspielens verbunden
+        discardPile.add(card); // wird von Playerklassen aufgerufen
     }
 
     public static Card showTopCard() {
@@ -14,9 +14,9 @@ public class DiscardPile {
     public static ArrayList<Card> returnDiscardPile() {
         ArrayList<Card> emptyList = new ArrayList<>();
         ArrayList<Card> returnPile = discardPile;
-        discardPile = emptyList;
-        discardPile.add(returnPile.removeLast());
-        return returnPile; // --  mit dem CardDeck verbunden
+        discardPile = emptyList; // könnte hier auch .clear() benutzen aber funktioniert = wird nicht mehr angegriffen
+        discardPile.add(returnPile.removeLast()); //neuer discardPile bekommt die letzte karte des alten discardPile (also die TopCard) wieder hinzugefügt
+        return returnPile;
     }
 
     public static void clearDiscardPile() {

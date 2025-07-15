@@ -29,9 +29,9 @@ public class CardDeck {
         currentDeck.removeFirst();
 
         if (drawn.getColour() == Card.Colour.WILD) {
-            drawn.wildColor = null;
+            drawn.wildColor = null; //setzt die ausgewählte farbe der gezogenen WildCard auf standard zurück
         }
-        lastDrawnCard = drawn; // Track the most recently drawn card
+        lastDrawnCard = drawn; // behält die zuletzt gezogene karte als variable
         return drawn;
     }
 
