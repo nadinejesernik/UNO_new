@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class Menu {
     static Player currentPlayer;
+    // Hauptmenü für den aktuellen Spieler
     static void mainMenu(Player player) {
         currentPlayer = player;
-
         System.out.println("it's " + currentPlayer.playerName + "'s turn");
         System.out.println("Choose an option:");
         System.out.println("1. Play");
@@ -15,26 +15,26 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         String menuAuswahl = scanner.next();
         switch (menuAuswahl) {
-            case "1":
+            case "1":// Karte spielen
                 currentPlayer.playCard();
                 break;
-            case "2":
+            case "2":// Hilfe anzeigen
                 help();
                 break;
-            case "3":
+            case "3":// Punktestand anzeigen
                 viewScores();
                 break;
-            case "4":
+            case "4":// Spiel beenden
                 exitGame();
                 break;
-            default:
+            default:// Ungültige Eingabe
                 System.out.println("Wrong input, try again");
                 mainMenu(currentPlayer);
                 break;
         }
 
     }
-
+    // Hilfemenü mit Spielregeln
     static void help() {
         System.out.println("=== HOW TO PLAY UNO ===");
 
@@ -55,7 +55,6 @@ public class Menu {
         System.out.println("When this happens, you will be shown a special menu with a new option to accuse them.");
         System.out.println("This will start a challenge. If you're right, they draw 4 cards instead. If you're wrong, you draw 6.");
         System.out.println(" ");
-
         // Eingabeformat
         System.out.println("--- Input Format ---");
         System.out.println("When it's your turn, your hand will be shown with numbered cards.");
@@ -64,25 +63,33 @@ public class Menu {
         System.out.println("For example:    2 UNO");
         System.out.println("The system accepts commands separated by spaces.");
         System.out.println(" ");
+        // Datenbank-Erklärung
+        System.out.println("--- Score Tracking ---");
+        System.out.println("Each round's scores are saved to a local SQLite database file.");
+        System.out.println("You can view total scores at any time via the main menu.");
+        System.out.println("The database keeps track of each player's score per round and shows totals.");
+        System.out.println("Scores are grouped by Game ID, which increases automatically when you restart the game.");
+        System.out.println();
 
         System.out.println("Your goal is to be the first to play all your cards, which makes you the winner of the round and awards you points.");
         System.out.println("And whoever reaches 500 points first is the WINNER of the entire Game! Good luck!");
         mainMenu(currentPlayer);
     }
+    // Menü zum Spiel beenden mit Sicherheitsabfrage
     static void exitGame() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Are you sure you want to end the game? Yes(1) or No(2)?");
         int endAuswahl = scanner.nextInt();
         switch (endAuswahl){
-            case 1:
+            case 1:// Spiel wirklich beenden
                 System.out.println("See you next time!");
                 System.exit(0);
-            case 2:
+            case 2: // Zurück ins Menü
                 System.out.println("Back to the menu!");
                 mainMenu(currentPlayer);
         }
     }
-
+    // Zeigt aktuelle Punkte aller Spieler dieser Runde
     public static void viewScores() {
         int gameId = DBManager.getGameId();
 
