@@ -93,9 +93,14 @@ public class Menu {
     public static void viewScores() {
         int gameId = DBManager.getGameId();
 
-        String query = "SELECT PlayerName, SUM(Score) as TotalScore " +
-                "FROM Scores WHERE GameID = " + gameId + " " +
-                "GROUP BY PlayerName ORDER BY TotalScore DESC";
+        String query =
+                "SELECT PlayerName, Score " +
+                        "FROM Scores " +
+                        "WHERE GameID = " + gameId + " " +
+                        "AND RoundNo = (" +
+                        "SELECT MAX(RoundNo) FROM Scores WHERE GameID = " + gameId +
+                        ") " +
+                        "ORDER BY Score DESC;";
 
         try {
             var results = DBManager.getDb().executeQuery(query);
@@ -106,7 +111,7 @@ public class Menu {
             } else {
                 System.out.println("|| Total Scores for Game " + gameId + " ||");
                 for (var row : results) {
-                    System.out.println(row.get("PlayerName") + ": " + row.get("TotalScore") + " points");
+                    System.out.println(row.get("PlayerName") + ": " + row.get("Score") + " points");
                 }
                 System.out.println(" ");
             }
@@ -117,4 +122,5 @@ public class Menu {
 
         mainMenu(currentPlayer);
     }
+
 }
