@@ -11,9 +11,9 @@ public class CompPlayer extends Player {
 
     public CompPlayer(String name) {
         super(name);
-        attention = rand.nextInt(5, 11); //Put attention between 5 (distracted) and 10 (focused) to determine how likely COM is to put a wrong card
-        int[] weighted = {1, 1, 2, 2, 3, 3, 4, 5, 6, 7, 8, 9, 10}; // lower numbers occur more often
-        patience = weighted[rand.nextInt(weighted.length)]; //set patience with 1 low patience (will accuse more often) to 10
+        attention = rand.nextInt(5, 11); //Attention wird zwischen 5 und 10 gesetzt
+        int[] weighted = {1, 1, 2, 2, 3, 3, 4, 5, 6, 7, 8, 9, 10}; // Zahlen von 1-4 kommen öfter vor...
+        patience = weighted[rand.nextInt(weighted.length)]; //...um Bots etwas weniger patient zu machen (damit beschuldigen sie häufiger)
 
     }
 
@@ -21,22 +21,23 @@ public class CompPlayer extends Player {
     public void playCard() {
         List<Card> hand = getHand();
         List<Card> validCards = new ArrayList<>();
-        ActionManager.setCurrentPlayer(this); //to tell ActionManager which Player to reference
+        ActionManager.setCurrentPlayer(this); //zum Player referenzieren
 
         if (Cheater) {
             Cheater = false;
         }
-        if (checkForDraw()) { //if checkForDraw returns true, turn is skipped
+        if (checkForDraw()) { //wenn checkForDraw auf true gesetzt ist wird der Spieler übersprungen
             return;
         }
 
-        if(ActionManager.isSkipped()) {
+        if(ActionManager.isSkipped()) { //passiert wenn Skip Karte gespielt wurde
             ActionManager.setSkipped(false);
             System.out.println(getPlayerName() + "'s turn has been skipped.");
             System.out.println("_____________");
             return;
         }
 
+        //call UNO Logik
         if (hand.size() == 2) {
             if (rand.nextBoolean()) {
                 System.out.println(playerName +" said UNO!");
@@ -56,27 +57,28 @@ public class CompPlayer extends Player {
         while (true) {
 
             for (Card c : hand) {
-                if (CardValidity.isValidCard(c)) { //check if card is valid through CardValidity
+                if (CardValidity.isValidCard(c)) {
                     validCards.add(c);
                 }
             }
 
-            boolean makesMistake = rand.nextInt(10) >= attention; //to establish whether COM will make a mistake or not
+            boolean makesMistake = rand.nextInt(10) >= attention; //um festzustellen ob COM einen Fehler macht
             Card chosenCard;
 
             if (!validCards.isEmpty()) {
-                if (!makesMistake) {// if COM is not making a mistake, choose a valid card randomly
+                if (!makesMistake) {// wenn kein Fehler gemacht wird spiel COM eine seiner gültigen Karten
                     chosenCard = validCards.get(rand.nextInt(validCards.size()));
-                } else {// if COM makes a mistake — may pick a random card (could be invalid)
+                } else {// wenn COM unaufmerksam ist wird irgendeine Karte aus der Hand gewählt, auch wenn sie ungültig ist
                     chosenCard = hand.get(rand.nextInt(hand.size()));
                 }
 
                 if (CardValidity.isValidCard(chosenCard)) {
 
+                    //Für DrawFour Logik
                     if (chosenCard instanceof ActionCard ac && ac.getAction() == ActionCard.Action.DRAW_FOUR) {
-                        if (!CardDeck.wasJustDrawn(ac)) {
+                        if (!CardDeck.wasJustDrawn(ac)) { //solange DrawFour nicht gerade erst gezogen wurde
                             List<Card> snapshot = new ArrayList<>(getHand());
-                            snapshot.remove(ac); // remove the Draw Four itself
+                            snapshot.remove(ac); // Entferne die DrawFour Karte
                             ActionManager.setDrawFourHandSnapshot(snapshot);
                             ActionManager.setDrawFourTopCard(DiscardPile.showTopCard());
                         }
@@ -88,10 +90,10 @@ public class CompPlayer extends Player {
                     }
                     hand.remove(chosenCard);
                     DiscardPile.cardPlayed(chosenCard);
-                    System.out.println(getPlayerName() + " played: " + chosenCard); //sout so human Players know what is happening
+                    System.out.println(getPlayerName() + " played: " + chosenCard);
                     if (Table.debug) {
                         System.out.println(" (Attention: " + attention + ")");
-                    } //only show for debug purposes
+                    }
                     break;
                 } else {
                     System.out.println(getPlayerName() + " made a mistake. Played invalid card. Drawing instead.");
@@ -99,21 +101,21 @@ public class CompPlayer extends Player {
                     hand.add(drawn);
                     if (Table.debug) {
                         System.out.println(getPlayerName() + " drew: " + drawn);
-                    } //only to show if it works
+                    }
                     break;
                 }
 
             } else {
-                // No valid cards — must draw a card
+                // Wenn COM keine gültigen Karten hat wird automatisch eine Karte gezogen
                 System.out.println(getPlayerName() + " had no valid cards. Drawing...");
                 Card drawn = CardDeck.drawCard();
                 hand.add(drawn);
 
                 if (Table.debug) {
-                    System.out.println(getPlayerName() + " drew: " + drawn); //only to show if it works
+                    System.out.println(getPlayerName() + " drew: " + drawn);
                 }
 
-                if (CardValidity.isValidCard(drawn)) {
+                if (CardValidity.isValidCard(drawn)) { //wenn gezogene Karte gültig ist wird sie sofort gespielt
                     if (drawn instanceof ActionCard) {
                         ((ActionCard) drawn).playAction();
                     }
